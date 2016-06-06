@@ -71,11 +71,11 @@
 void operatorControl()
 {
     //used in a switch for different control modes.
-    typedef enum DriveMode {FRONT, LEFT, RIGHT, BACK}DriveMode;
+  typedef enum DriveMode {FRONT, LEFT, RIGHT, BACK, NOTHING}DriveMode;
     DriveMode DriverMode = FRONT;
-    DriveMode temp;
+    DriveMode temp = NOTHING;
     int conveyorSpeed;
-    bool conveyorSpeedHold = true;
+    bool conveyorSpeedHold = false;
 
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
@@ -180,7 +180,7 @@ void operatorControl()
 	if(C1_5U)
 	  conveyorSpeedHold = true;
 
-	else if(C1_5U)
+	else if(C1_5D)
 	  conveyorSpeedHold = false;
 
 	if(!conveyorSpeedHold)
@@ -190,7 +190,7 @@ void operatorControl()
 	setMotor(LFConveyor, conveyorSpeed);
 	setMotor(RBConveyor, conveyorSpeed);
 	setMotor(LBConveyor, conveyorSpeed);
-	  
+	printf("%d\n\r", conveyorSpeed);
         //motors can only be updated every 20 milliseconds
         delay(20);
     }
