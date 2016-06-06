@@ -9,12 +9,12 @@ typedef struct motor
 }motor;
 
 //back conveyor belt motors
-extern motor RBConveyer;
-extern motor LBConveyer;
+extern motor RBConveyor;
+extern motor LBConveyor;
 
 //front conveyor belt motors
-extern motor RFConveyer;
-extern motor LFConveyer;
+extern motor RFConveyor;
+extern motor LFConveyor;
 
 //right motors
 extern motor RFDrive;     //port 2, reversed

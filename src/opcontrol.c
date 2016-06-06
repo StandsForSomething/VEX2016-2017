@@ -73,17 +73,20 @@ void operatorControl()
     //used in a switch for different control modes.
     typedef enum DriveMode {FRONT, LEFT, RIGHT, BACK}DriveMode;
     DriveMode DriverMode = FRONT;
+    DriveMode temp;
+    int conveyorSpeed;
+    bool conveyorSpeedHold = true;
 
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
     //the robot moves it can't legally be fixed.  The option of using a jumper to
     //continue is incase the issue can't be fixed.
-    while(getSensor(powerExpand) < 1000 && !getSensor(powerExpandJumper))
-    {
-        printf("test");
-        delay(1);
-    }
+    //while(getSensor(powerExpand) < 1000 && !getSensor(powerExpandJumper))
+    //{
+    //     printf("test");
+    //    delay(1);
+    //}
 
 
     //control loop
@@ -122,7 +125,7 @@ void operatorControl()
         if ((abs(C1LY) > 20 || abs(C1LX) > 20 || abs(C1RX) > 20))
         {
             //switch to change driver configuration
-            switch (DriverMode)
+            switch (temp)
             {
             case FRONT: //First Mode (8U)
                 //pressing the left joystick forward
@@ -174,7 +177,20 @@ void operatorControl()
         //////////////////
         //Conveyor belt //
         //////////////////
-	
+	if(C1_5U)
+	  conveyorSpeedHold = true;
+
+	else if(C1_5U)
+	  conveyorSpeedHold = false;
+
+	if(!conveyorSpeedHold)
+	  conveyorSpeed = C1RY;
+
+	setMotor(RFConveyor, conveyorSpeed);
+	setMotor(LFConveyor, conveyorSpeed);
+	setMotor(RBConveyor, conveyorSpeed);
+	setMotor(LBConveyor, conveyorSpeed);
+	  
         //motors can only be updated every 20 milliseconds
         delay(20);
     }

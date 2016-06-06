@@ -9,6 +9,7 @@
 
 #emacs autosave
 [#]*[#]
+.[#]*
 *~
 
 #megasync .debris folder
