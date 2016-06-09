@@ -186,10 +186,10 @@ void operatorControl()
 	if(!conveyorSpeedHold)
 	  conveyorSpeed = C1RY;
 
-	setMotor(RFConveyor, conveyorSpeed);
-	setMotor(LFConveyor, conveyorSpeed);
-	setMotor(RBConveyor, conveyorSpeed);
-	setMotor(LBConveyor, conveyorSpeed);
+	setMotor(ROConveyor, conveyorSpeed);
+	setMotor(RIConveyor, conveyorSpeed);
+	setMotor(LIConveyor, conveyorSpeed);
+	setMotor(LOConveyor, conveyorSpeed);
 	printf("%d\n\r", conveyorSpeed);
         //motors can only be updated every 20 milliseconds
         delay(20);

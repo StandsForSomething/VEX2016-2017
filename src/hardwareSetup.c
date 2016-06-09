@@ -14,13 +14,13 @@ typedef struct motor
     bool reversed;
 }motor;
 
-//back conveyor belt motors
-motor RBConveyor = {2, false};
-motor LBConveyor = {3, true};
+//right conveyor belt motors
+motor ROConveyor = {2, false};
+motor RIConveyor = {3, true};
 
-//front conveyor belt motors
-motor RFConveyor = {4, false};
-motor LFConveyor = {5, true};
+//left conveyor belt motors
+motor LIConveyor = {4, false};
+motor LOConveyor = {5, true};
 
 //right motors
 motor RFDrive = {5, true};
