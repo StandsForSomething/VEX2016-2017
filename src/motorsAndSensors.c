@@ -25,7 +25,6 @@ motor rightLift2 = {9, false};
 //digital
 sensor driveControlJumper = {1, DIGITAL, false};
 sensor powerExpandJumper = {12, DIGITAL, true};
-
 //analog
 sensor powerExpand = {1, ANALOG, false};
 sensor autoSelect = {2, ANALOG, false};

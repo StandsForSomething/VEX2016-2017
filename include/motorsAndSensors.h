@@ -15,6 +15,7 @@ extern motor leftLift1;
 extern motor leftLift2;
 extern motor rightLift1;
 extern motor rightLift2;
+extern encoder armEnc;
 
 //digital
 extern sensor driveControlJumper;
