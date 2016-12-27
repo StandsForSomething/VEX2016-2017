@@ -32,9 +32,11 @@ sensor autoSelect = {2, ANALOG, false};
 //encoders
 encoder encoderLeft;
 encoder encoderRight;
+encoder armEnc;
 
 void encoderSetup()
 {
     initEncoderTW(&encoderLeft, 11, 12, false, SPEED, ROTATIONS, 1.0);
     initEncoderTW(&encoderRight, 8, 9, false, SPEED, ROTATIONS, 1.0);
+    initEncoderTW(&armEnc, 1, 2, false, TORQUE, COUNTS, 1.0);
 }

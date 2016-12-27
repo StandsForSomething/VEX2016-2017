@@ -197,6 +197,16 @@ void operatorControl()
             setMotor(RBDriveI, 0);
             setMotor(RBDriveO, 0);
         }
+
+        if(C1_6U)
+            pidValue = 127;
+
+        else if(C1_6D)
+            pidValue = -127;
+
+        else
+            pidValue = 0;
+        
         //motors can only be updated every 20 milliseconds
         delay(20);
     }

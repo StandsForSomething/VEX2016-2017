@@ -2,5 +2,5 @@
 #define ARMPCONTROLLER_H_
 
 extern float pidValue;
-extern void pidController;
+extern void pidController();
 #endif
