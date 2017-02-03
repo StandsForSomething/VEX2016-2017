@@ -2,22 +2,22 @@
 #define MOTORS_H_
 
 //left drive motors
-extern motor LFDrive;  //port 2, reversed
-extern motor LBDriveO;  //port 3, not reversed
-extern motor LBDriveI;  //port 4, reversed
+extern motor LFDrive;  //port 2, not reversed
+extern motor LBDriveO;  //port 3, reversed
+extern motor LBDriveI;  //port 4, not reversed
 
 //right drive motors
-extern motor RFDrive;  //port 7, not reversed
-extern motor RBDriveO;  //port 8, reversed
-extern motor RBDriveI;  //port 9, not reversed
+extern motor RFDrive;  //port 7,  reversed
+extern motor RBDriveO;  //port 8, not reversed
+extern motor RBDriveI;  //port 9, reversed
 
 //arm motors
-extern motor liftLeft;  //port 4, not reversed
-extern motor liftRight1;  //port 5, reversed
-extern motor liftRight2;  //port 10, reversed
+extern motor liftLeft;  //port 4, reversed
+extern motor liftRight;  //port 5, not reversed
 
 //claw
-extern motor claw; //port 1, not reversed
+extern motor claw1;  //port 1, reversed
+extern motor claw2;  //port 10, not reversed
 
 //digital
 extern sensor powerExpandJumper;    //digital port 2, input, reversed

@@ -238,15 +238,13 @@ void operatorControl()
         if(abs(liftControl) > 15)
         {
             setMotor(liftLeft, liftControl);
-            setMotor(liftRight1, liftControl);
-            setMotor(liftRight2, liftControl);
+            setMotor(liftRight, liftControl);
         }
 
         else
         {
             setMotor(liftLeft, 0);
-            setMotor(liftRight1, 0);
-            setMotor(liftRight2, 0);
+            setMotor(liftRight, 0);
         }
 
 
@@ -255,12 +253,14 @@ void operatorControl()
         ////////
         if(abs(clawControl) > 15)
         {
-            setMotor(claw, clawControl);
+            setMotor(claw1, clawControl);
+            setMotor(claw2, clawControl);
         }
 
         else
         {
-            setMotor(claw, 0);
+            setMotor(claw1, 0);
+            setMotor(claw2, 0);
         }
 
         //motors can only be updated every 20 milliseconds

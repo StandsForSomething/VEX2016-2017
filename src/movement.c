@@ -110,8 +110,7 @@ void controlDriveEnc(int speed, direction dir, double counts)
 void controlLift(int speed)
 {
     setMotor(liftLeft, speed);
-    setMotor(liftRight1, speed);
-    setMotor(liftRight2, speed);
+    setMotor(liftRight, speed);
 }
 
 typedef struct controlLiftEncArgs

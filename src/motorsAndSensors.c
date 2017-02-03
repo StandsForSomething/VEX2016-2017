@@ -15,11 +15,11 @@ motor RBDriveI = {9, true};
 
 //lift motors
 motor liftLeft = {5, true};
-motor liftRight1 = {6, false};
-motor liftRight2 = {10, false};
+motor liftRight = {6, false};
 
 //claw motors
-motor claw = {1, false};
+motor claw1 = {1, true};
+motor claw2 = {10, false};
 
 ///////////
 //sensors//
