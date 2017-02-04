@@ -1,70 +1,58 @@
 #include "main.h"
-
+/*
 void controlDrive(int speed, direction dir)
 {
     switch(dir)
     {
     case FORWARD:
         setMotor(LFDrive, speed);
-        setMotor(LBDriveI, speed);
-        setMotor(LBDriveO, speed);
+        setMotor(LBDrive, speed);
         setMotor(RFDrive, speed);
-        setMotor(RBDriveI, speed);
-        setMotor(RBDriveO, speed);
+        setMotor(RBDrive, speed);
         break;
 
     case BACKWARD:
         setMotor(LFDrive, -speed);
-        setMotor(LBDriveI, -speed);
-        setMotor(LBDriveO, -speed);
+        setMotor(LBDrive, -speed);
         setMotor(RFDrive, -speed);
-        setMotor(RBDriveI, -speed);
-        setMotor(RBDriveO, -speed);
+        setMotor(RBDrive, -speed);
         break;
 
     case LEFT_TURN:
         setMotor(LFDrive, -speed);
-        setMotor(LBDriveI, -speed);
-        setMotor(LBDriveO, -speed);
+        setMotor(LBDrive, -speed);
         setMotor(RFDrive, speed);
-        setMotor(RBDriveI, speed);
-        setMotor(RBDriveO, speed);
+        setMotor(RBDrive, speed);
         break;
 
     case RIGHT_TURN:
         setMotor(LFDrive, speed);
-        setMotor(LBDriveI, speed);
-        setMotor(LBDriveO, speed);
+        setMotor(LBDrive, speed);
+        setMotor(LBDrive, speed);
         setMotor(RFDrive, -speed);
-        setMotor(RBDriveI, -speed);
-        setMotor(RBDriveO, -speed);
+        setMotor(RBDrive, -speed);
+        setMotor(RBDrive, -speed);
         break;
 
     case LEFT_TURN_WIDE:
         setMotor(LFDrive, 0);
-        setMotor(LBDriveI, 0);
-        setMotor(LBDriveO, 0);
+        setMotor(LBDrive, 0);
         setMotor(RFDrive, speed);
-        setMotor(RBDriveI, speed);
-        setMotor(RBDriveO, speed);
+        setMotor(RBDrive, speed);
         break;
 
     case RIGHT_TURN_WIDE:
         setMotor(LFDrive, speed);
-        setMotor(LBDriveI, speed);
-        setMotor(LBDriveO, speed);
+        setMotor(LBDrive, speed);
         setMotor(RFDrive, 0);
-        setMotor(RBDriveI, 0);
-        setMotor(RBDriveO, 0);
+        setMotor(RBDrive, 0);
         break;
-        
+
     case STOP:
         setMotor(LFDrive, 0);
-        setMotor(LBDriveI, 0);
-        setMotor(LBDriveO, 0);
+        setMotor(LBDrive, 0);
         setMotor(RFDrive, 0);
-        setMotor(RBDriveI, 0);
-        setMotor(RBDriveO, 0);
+        setMotor(RBDrive, 0);
         break;
 
     default:
@@ -109,8 +97,10 @@ void controlDriveEnc(int speed, direction dir, double counts)
 
 void controlLift(int speed)
 {
-    setMotor(liftLeft, speed);
-    setMotor(liftRight, speed);
+    setMotor(liftLeft1Y, speed);
+    setMotor(liftleft2, speed);
+    setMotor(liftRight1Y, speed);
+    setMotor(liftRight2, speed);
 }
 
 typedef struct controlLiftEncArgs
@@ -125,10 +115,9 @@ void controlLiftEncTask(void *funcArgs)
     controlLiftEncArgs args = *argsPointer;
 
     controlLift(args.speed);
-    encoderReset(armEnc.shaftEncoder);
     if(args.speed >= 0)
     {
-        while(getSensor(armEnc.parent) < args.encValue)
+        while(getSensor(armPot) < args.encValue)
         {
             //printf("%f\n\r", getSensor(armEnc.parent));
             delay(20);
@@ -136,7 +125,7 @@ void controlLiftEncTask(void *funcArgs)
     }
     else
     {
-        while(getSensor(armEnc.parent) > args.encValue)
+        while(getSensor(armPot) > args.encValue)
         {
             //printf("%f\n\r", getSensor(armEnc.parent));
             delay(20);
@@ -162,3 +151,4 @@ void controlLiftEnc(int speed, double encValue, bool waitForTaskEnd)
     }
     printf("exit\n\r");
 }
+*/

@@ -53,13 +53,9 @@ void initializeIO()
     pinMode(ENC_RIGHT_BOT, INPUT);
     pinMode(ENC_LEFT_TOP, INPUT);
     pinMode(ENC_LEFT_BOT, INPUT);
-    pinMode(ARM_ENC_TOP, INPUT);
-    pinMode(ARM_ENC_BOT, INPUT);
     pinMode(POWER_EXPAND_JUMP, INPUT);
     pinMode(POWER_EXPAND, INPUT_ANALOG);
-    pinMode(DRIVE_CONFIG_JUMP, INPUT);
 }
-
 /*
  * Runs user initialization code. This function will be started in its own task
  * with the default priority and stack size once when the robot is starting up.

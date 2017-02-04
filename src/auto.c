@@ -58,7 +58,7 @@
 #define BLUE true
 
 bool color = BLUE;
-
+/*
 void moveCornerStar()
 {
     controlDriveEnc(127, FORWARD,   1.7);
@@ -108,9 +108,9 @@ void hang()
     controlDriveEnc(127, FORWARD, 0.5);
     controlLiftEnc(-127, -180.0, true);
 }
-
+*/
 void autonomous()
-{
+{/*
     switch(currentSelection)
     {
     case 1:
@@ -163,5 +163,5 @@ void autonomous()
     break;
     }
 
-    printf("end autonomous\n\r");
+    printf("end autonomous\n\r");*/
 }
