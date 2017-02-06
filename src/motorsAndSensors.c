@@ -4,18 +4,18 @@
 //////////
 
 //left drive motors
-motor LFDrive = {6, false};
-motor LBDrive = {7, false};
+motor LFDrive = {4, false};
+motor LBDrive = {5, false};
 
 
 //right drive motors
-motor RFDrive = {4, true};
-motor RBDrive = {5, true};
+motor RFDrive = {6, true};
+motor RBDrive = {7, true};
 
 //lift motors
-motor liftLeft1Y = {3, true};
+motor liftLeft1Y = {3, false};
 motor liftleft2 = {2, true};
-motor liftRight1Y = {8, false};
+motor liftRight1Y = {8, true};
 motor liftRight2 = {9, false};
 
 //claw motors
