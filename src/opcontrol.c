@@ -59,58 +59,45 @@
  * This task should never exit; it should end with some kind of infinite loop,
  * even if empty.
  */
-
+#define ARM_LAUNCH_HEIGHT 1800
+#define ARM_MIN_HEIGHT 0
+#define ARM_CONST_POWER_HEIGHT 765
+#define ARM_CONST_POWER 15
 
 void operatorControl()
 {
     printf("opcontrol started\n\r");
-    bool clawClosed = false;
     int liftControl = 0;
     int clawControl = 0;
-    int driveSpeed = 0;
-
+    int driveSpeed = 100;
+    int turnSpeed = 75;
+    int motorSpeed = 0;
+    int motorTurnSpeed = 0;
+    bool btn5uPushed = false;
+    bool btn5dPushed = false;
+    bool btn6uPushed = false;
+    bool btn6dPushed = false;
+    bool btn8uPushed = false;
+    bool btn8dPushed = false;
+    bool btn8lPushed = false;
+    bool btn8rPushed = false;
+    bool tipped;
+    
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
     //the robot moves it can't legally be fixed.  The option of using a jumper to
     //continue is incase the issue can't be fixed.
-    //while(getSensor(powerExpand) < 1000 && getSensor(powerExpandJumper)){delay(20);}
-
-    //control loop
-    while (1)
+    while(getSensor(powerExpand) < 1000 && getSensor(powerExpandJumper))
     {
-        /////////
-        //Drive//
-        //////////////////////////////////////////////////////////////////////
-        //I debounce buttons in button group 8.  It has occured to be that  //
-        //there probally is no reason for debounce.  I have no idea why they//
-        //are debounced so I will probally remove it later when I can make  //
-        //sure it isn't needed.                                             //
-        //////////////////////////////////////////////////////////////////////
+        printf("power expander unplugged!\n\r");
+        delay(1000);
+    }
 
-
-        printf("opcontrol started\n\r");
-        int liftControl = 0;
-        int clawControl = 0;
-        int driveSpeed = 127;
-        int turnSpeed = 127;
-        int motorSpeed = 0;
-        int motorTurnSpeed = 0;
-        bool btn5uPushed = false;
-        bool btn5dPushed = false;
-        bool btn6uPushed = false;
-        bool btn6dPushed = false;
-        bool btn8uPushed = false;
-        bool btn8dPushed = false;
-        bool btn8lPushed = false;
-        bool btn8rPushed = false;
-
-        //in the case that the power expander isn't plugged in don't continue until
-        //it's plugged in or overriden by placeing a jumper in digital pin 2.
-        //this makes sure the robot can't move unless the issue is fixed becuase once
-        //the robot moves it can't legally be fixed.  The option of using a jumper to
-        //continue is incase the issue can't be fixed.
-        //while(getSensor(powerExpand) < 1000 && getSensor(powerExpandJumper)){delay(20);}
+    while(1)
+    {
+            
+        printf("%f\n\r", getSensor(armPot));
         if(!isJoystickConnected(2))
         {
             if(C1_8U && !btn8uPushed && !btn8dPushed)
@@ -241,42 +228,69 @@ void operatorControl()
         ////////
         if(!isJoystickConnected(2))
         {
-            liftControl = -C1LY;
+            liftControl = C1LY;
             clawControl = C1RY;
         }
 
         else
         {
-            liftControl = -C2LY;
+            liftControl = C2LY;
             clawControl = C2RY;
         }
 
-        if(abs(liftControl) > 15)
+        if(C1_8U)
         {
-            setMotor(liftLeft1Y, liftControl);
-            setMotor(liftleft2, liftControl);
-            setMotor(liftRight1Y, liftControl);
-            setMotor(liftRight2, liftControl);
+            tipped = true;
         }
 
         else
         {
-            setMotor(liftLeft1Y, 0);
-            setMotor(liftleft2, 0);
-            setMotor(liftRight1Y, 0);
-            setMotor(liftRight2, 0);
+            tipped = false;
+        }
+
+        if(abs(liftControl) > 15 &&
+           (getSensor(armPot) <= (ARM_LAUNCH_HEIGHT) || liftControl < 0) &&
+           (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
+        {
+            setMotor(liftLeftY, liftControl);
+            setMotor(liftLeft, liftControl);
+            setMotor(liftRightY, liftControl);
+            setMotor(liftRight, liftControl);
+        }
+
+        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT)
+        {
+            setMotor(liftLeftY, ARM_CONST_POWER);
+            setMotor(liftLeft, ARM_CONST_POWER);
+            setMotor(liftRightY, ARM_CONST_POWER);
+            setMotor(liftRight, ARM_CONST_POWER);
+        }
+
+        else
+        {
+            setMotor(liftLeftY, 0);
+            setMotor(liftLeft, 0);
+            setMotor(liftRightY, 0);
+            setMotor(liftRight, 0);
         }
 
         ////////
         //claw//
         ////////
-        if(abs(clawControl) > 15)
+        if(abs(clawControl) > 15 && getSensor(armPot) < ARM_LAUNCH_HEIGHT)
         {
             setMotor(claw1, clawControl);
             setMotor(claw2, clawControl);
         }
 
-        else
+        
+        else if(getSensor(armPot) >= ARM_LAUNCH_HEIGHT && !tipped)
+        {
+            setMotor(claw1, -127);
+            setMotor(claw2, -127);
+        }
+        
+        else if(getSensor(armPot))
         {
             setMotor(claw1, 0);
             setMotor(claw2, 0);
