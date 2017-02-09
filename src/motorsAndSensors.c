@@ -13,10 +13,10 @@ motor RFDrive = {6, true};
 motor RBDrive = {7, true};
 
 //lift motors
-motor liftLeft1Y = {3, false};
-motor liftleft2 = {2, true};
-motor liftRight1Y = {8, true};
-motor liftRight2 = {9, false};
+motor liftLeftY = {3, true};
+motor liftLeft = {2, false};
+motor liftRightY = {8, false};
+motor liftRight = {9, true};
 
 //claw motors
 motor claw1 = {1, false};
@@ -41,6 +41,6 @@ encoder encoderRight;
 
 void encoderSetup()
 {
-    initEncoderTW(&encoderLeft, 11, 12, true, SPEED, ROTATIONS, 1.0);
-    initEncoderTW(&encoderRight, 8, 9, false, SPEED, ROTATIONS, 1.0);
+    initEncoderTW(&encoderLeft, 8, 9, true, SPEED, ROTATIONS, 1.0);
+    initEncoderTW(&encoderRight, 11, 12, false, SPEED, ROTATIONS, 1.0);
 }
