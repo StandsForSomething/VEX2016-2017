@@ -54,17 +54,38 @@
  * disable/enable cycle.
  */
 
+#define SKILLS 1
+
 #define RED false
 #define BLUE true
 bool color = BLUE;
 
+void skillsLoads()
+{
+    for(i = 0; i < 3; i++)
+    {
+        controlClawTime(127, 500);
+        controlClaw(50);
+        controlDriveEnc(127, BACKWARD 10, true);
+        controlLiftPot(127, ARM_LAUNCH_HEIGHT);
+        controlClaw(-50);
+        controlLiftPot(-127, ARM_MIN_HEIGHT);
+        controClaw(0);
+        controlDriveEnc(127, FORWARD, 10, true);
+    }
+}
 
 void autonomous()
 {
     switch(currentSelection)
     {
-    case 1:
-
+    case SKILLS:
+        controlDriveEnc(127, BACKWARD, 5, true);
+        controlClawTime(127, 500);
+        delay(1000);
+        controlDriveEnc(127, FORWARD, 4, true);
+        skillsLoads();
+        break;
 
     default:
         printf("error, selected autonomous doesn't exist\n\r");

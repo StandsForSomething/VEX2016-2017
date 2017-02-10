@@ -49,7 +49,6 @@
  */
 void initializeIO()
 {
-    
 }
 /*
  * Runs user initialization code. This function will be started in its own task
@@ -73,6 +72,7 @@ void initialize()
     lcdInit(uart1);
     lcdClear(uart1);
     newItem("no auton", NULL);
+    newItem("skills", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
