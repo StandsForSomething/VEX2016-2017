@@ -102,22 +102,22 @@ void controlDriveEnc(int speed, direction dir, double counts, bool antiDrift)
 
 void controlLift(int speed)
 {
-    setMotor(liftLeft1Y, speed);
-    setMotor(liftleft2, speed);
-    setMotor(liftRight1Y, speed);
-    setMotor(liftRight2, speed);
+    setMotor(liftLeftY, speed);
+    setMotor(liftLeft, speed);
+    setMotor(liftRightY, speed);
+    setMotor(liftRight, speed);
 }
 
-typedef struct controlLiftEncArgs
+typedef struct controlLiftPotArgs
 {
     int speed;
     double potValue;
-}controlLiftEncArgs;
+}controlLiftPotArgs;
 
 void controlLiftPotTask(void *funcArgs)
 {
-    controlLiftEncArgs* argsPointer = funcArgs;
-    controlLiftEncArgs args = *argsPointer;
+    controlLiftPotArgs* argsPointer = funcArgs;
+    controlLiftPotArgs args = *argsPointer;
 
     controlLift(args.speed);
     if(args.speed >= 0)
@@ -148,18 +148,31 @@ void controlLiftPotTask(void *funcArgs)
 
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
 {
-    controlLiftEncArgs args = {speed, potValue};
+    controlLiftPotArgs args = {speed, potValue};
 
     if(!waitForTaskEnd)
     {
-        taskCreate(controlLiftEncTask,
+        taskCreate(controlLiftPotTask,
                    TASK_DEFAULT_STACK_SIZE, &args, TASK_PRIORITY_DEFAULT);
         delay(20);
     }
 
     else
     {
-        controlLiftEncTask(&args);
+        controlLiftPotTask(&args);
     }
     printf("exit\n\r");
+}
+
+void controlClaw(int speed)
+{
+    setMotor(claw1, speed);
+    setMotor(claw2, speed);
+}
+
+void controlClawTime(int speed, int timeMS)
+{
+    controlClaw(speed);
+    delay(timeMS);
+    controlClaw(0);
 }
