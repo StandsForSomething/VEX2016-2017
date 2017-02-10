@@ -43,6 +43,11 @@ b * necessarily having to see the code (and therefore causing a multiple definit
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define MAIN_H_
 
+#define ARM_LAUNCH_HEIGHT 1800
+#define ARM_MIN_HEIGHT 20
+#define ARM_CONST_POWER_HEIGHT 765
+#define ARM_CONST_POWER 15
+
 #include <API.h>
 #include "hardwareAbstraction.h"
 #include "joystick.h"

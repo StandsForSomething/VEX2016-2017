@@ -59,10 +59,6 @@
  * This task should never exit; it should end with some kind of infinite loop,
  * even if empty.
  */
-#define ARM_LAUNCH_HEIGHT 1800
-#define ARM_MIN_HEIGHT 20
-#define ARM_CONST_POWER_HEIGHT 765
-#define ARM_CONST_POWER 15
 
 void operatorControl()
 {
