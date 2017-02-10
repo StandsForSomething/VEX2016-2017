@@ -45,7 +45,7 @@ b * necessarily having to see the code (and therefore causing a multiple definit
 
 #define ARM_LAUNCH_HEIGHT 1800
 #define ARM_MIN_HEIGHT 20
-#define ARM_CONST_POWER_HEIGHT 765
+#define ARM_CONST_POWER_HEIGHT 700
 #define ARM_CONST_POWER 15
 
 #include <API.h>
