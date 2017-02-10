@@ -60,7 +60,7 @@
  * even if empty.
  */
 #define ARM_LAUNCH_HEIGHT 1800
-#define ARM_MIN_HEIGHT 0
+#define ARM_MIN_HEIGHT 20
 #define ARM_CONST_POWER_HEIGHT 765
 #define ARM_CONST_POWER 15
 
