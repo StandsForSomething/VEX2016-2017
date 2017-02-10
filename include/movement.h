@@ -13,7 +13,7 @@ typedef enum direction
 
 //function prototypes
 void controlDrive(int speed, direction dir);
-void controlDriveEnc(int speed, direction dir, double counts);
+void controlDriveEnc(int speed, direction dir, double counts, bool antiDrift);
 void controlLift(int speed);
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd);
 #endif //MOVEMENT_H_

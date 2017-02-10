@@ -60,7 +60,7 @@ void controlDrive(int speed, direction dir)
         break;
     }
 }
-void controlDriveEnc(int speed, direction dir, double counts)
+void controlDriveEnc(int speed, direction dir, double counts, bool antiDrift)
 {
     encoderReset(encoderRight.shaftEncoder);
     encoderReset(encoderLeft.shaftEncoder);
@@ -92,6 +92,11 @@ void controlDriveEnc(int speed, direction dir, double counts)
         }
     }
 
+    if(antiDrift)
+    {
+        controlDrive(-speed, dir);
+        delay(400);
+    }
     controlDrive(0, STOP);
 }
 
@@ -129,7 +134,16 @@ void controlLiftPotTask(void *funcArgs)
             delay(20);
         }
     }
-    controlLift(0);
+
+    if(getSensor(armPot) > ARM_CONST_POWER_HEIGHT)
+    {
+        controlLift(ARM_CONST_POWER);
+    }
+
+    else
+    {
+        controlLift(0);
+    }
 }
 
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
