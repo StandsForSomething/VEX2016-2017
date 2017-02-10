@@ -56,106 +56,14 @@
 
 #define RED false
 #define BLUE true
-
 bool color = BLUE;
-/*
-void moveCornerStar()
-{
-    controlDriveEnc(127, FORWARD,   1.7);
-    if(color == BLUE)
-    {
-        controlDriveEnc(127, RIGHT_TURN, 0.73);
-        controlDriveEnc(127, FORWARD, 0.3);
-    }
 
-    else if(color == RED)
-    {
-        controlDriveEnc(127, LEFT_TURN, -0.73);
-    }
-    controlDriveEnc(127, FORWARD,   1.1);
-}
 
-void scoreCornerStar()
-{
-    moveCornerStar();
-    controlDriveEnc(127, FORWARD,   1.5);
-}
-
-void pushStarsUnderFence(int times)
-{
-    for(int i = 0; i < times; i++)
-    {
-        controlDriveEnc(127, FORWARD,   0.5);
-        controlDriveEnc(127, BACKWARD,  -0.5);
-    }
-}
-
-void starsOffFence()
-{
-    controlLiftEnc(127, 20, true);
-    controlLiftEnc(-127, -20, true);
-    controlLiftEnc(127, 10, true);
-}
-
-void expand()
-{
-    controlLiftEnc(127, 27, false);
-    controlDriveEnc(127, BACKWARD, -0.7);
-}
-
-void hang()
-{
-    controlDriveEnc(127, FORWARD, 0.5);
-    controlLiftEnc(-127, -180.0, true);
-}
-*/
 void autonomous()
-{/*
+{
     switch(currentSelection)
     {
     case 1:
-        printf("auton: 1: corner star\n\r");
-        expand();
-        scoreCornerStar();
-        break;
-
-    case 2:
-        printf("auton: 2: 1 + return\n\r");
-        expand();
-        scoreCornerStar();
-        controlDriveEnc(127, BACKWARD,  -10.0);
-        break;
-
-    case 3:
-        printf("auton: 3: 1 + fence\n\r");
-        expand();
-        scoreCornerStar();
-        starsOffFence();
-        break;
-
-
-    case 5: //not working yet
-        printf("auton: 5: hang\n\r");
-        expand();
-        moveCornerStar();
-        controlLiftEnc(127, 70, false);
-        controlDriveEnc(127, RIGHT_TURN, 0.25);
-        controlDriveEnc(127, BACKWARD, -2.2);
-        hang();
-        break;
-
-    case 100:  //not working yet
-        printf("auton: 100: the big one\n\r");
-        expand();
-        controlDriveEnc(127, FORWARD, 1.3);
-        controlDriveEnc(127, RIGHT_TURN_WIDE, 1.3);
-        controlDriveEnc(127, FORWARD, 2.2);
-        controlDriveEnc(127, BACKWARD, -1.8);
-        controlDriveEnc(127, LEFT_TURN, -0.5);
-        controlDriveEnc(127, FORWARD, 0.6);
-        controlDriveEnc(127, RIGHT_TURN, 0.6);
-        controlDriveEnc(127, FORWARD, 5);
-        break;
 
 
     default:
@@ -163,5 +71,5 @@ void autonomous()
     break;
     }
 
-    printf("end autonomous\n\r");*/
+    printf("end autonomous\n\r");
 }

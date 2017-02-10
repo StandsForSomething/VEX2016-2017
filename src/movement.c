@@ -1,5 +1,5 @@
 #include "main.h"
-/*
+
 void controlDrive(int speed, direction dir)
 {
     switch(dir)
@@ -106,10 +106,10 @@ void controlLift(int speed)
 typedef struct controlLiftEncArgs
 {
     int speed;
-    double encValue;
+    double potValue;
 }controlLiftEncArgs;
 
-void controlLiftEncTask(void *funcArgs)
+void controlLiftPotTask(void *funcArgs)
 {
     controlLiftEncArgs* argsPointer = funcArgs;
     controlLiftEncArgs args = *argsPointer;
@@ -117,26 +117,24 @@ void controlLiftEncTask(void *funcArgs)
     controlLift(args.speed);
     if(args.speed >= 0)
     {
-        while(getSensor(armPot) < args.encValue)
+        while(getSensor(armPot) < args.potValue)
         {
-            //printf("%f\n\r", getSensor(armEnc.parent));
             delay(20);
         }
     }
     else
     {
-        while(getSensor(armPot) > args.encValue)
+        while(getSensor(armPot) > args.potValue)
         {
-            //printf("%f\n\r", getSensor(armEnc.parent));
             delay(20);
         }
     }
     controlLift(0);
 }
 
-void controlLiftEnc(int speed, double encValue, bool waitForTaskEnd)
+void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
 {
-    controlLiftEncArgs args = {speed, encValue};
+    controlLiftEncArgs args = {speed, potValue};
 
     if(!waitForTaskEnd)
     {
@@ -151,4 +149,3 @@ void controlLiftEnc(int speed, double encValue, bool waitForTaskEnd)
     }
     printf("exit\n\r");
 }
-*/
