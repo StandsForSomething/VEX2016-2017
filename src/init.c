@@ -49,12 +49,7 @@
  */
 void initializeIO()
 {
-    pinMode(ENC_RIGHT_TOP, INPUT);
-    pinMode(ENC_RIGHT_BOT, INPUT);
-    pinMode(ENC_LEFT_TOP, INPUT);
-    pinMode(ENC_LEFT_BOT, INPUT);
-    pinMode(POWER_EXPAND_JUMP, INPUT);
-    pinMode(POWER_EXPAND, INPUT_ANALOG);
+    
 }
 /*
  * Runs user initialization code. This function will be started in its own task
