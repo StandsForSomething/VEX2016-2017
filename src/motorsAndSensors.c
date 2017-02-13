@@ -17,8 +17,8 @@ motor liftRightY = {7, false};
 motor liftRight = {8, true};
 
 //claw motors
-motor claw1 = {2, false};
-motor claw2 = {9, true};
+motor claw1 = {2, true};
+motor claw2 = {9, false};
 
 ///////////
 //sensors//
