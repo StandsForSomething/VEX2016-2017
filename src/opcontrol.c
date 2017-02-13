@@ -77,7 +77,9 @@ void operatorControl()
     bool btn8dPushed = false;
     bool btn8lPushed = false;
     bool btn8rPushed = false;
-    bool tipped;
+    bool btn7rPushed = false;
+    bool tipped = false;
+    bool clawClosed = false;
     
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
@@ -234,7 +236,7 @@ void operatorControl()
             clawControl = C2RY;
         }
 
-        if(C1_8U)
+        if(C1_7L)
         {
             tipped = true;
         }
@@ -273,7 +275,24 @@ void operatorControl()
         ////////
         //claw//
         ////////
-        if(abs(clawControl) > 15 && getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+        if(C1_7R && !clawClosed && !btn7rPushed)
+        {
+            clawClosed = true;
+            btn7rPushed = true;
+        }
+
+        else if(C1_7R && clawClosed && !btn7rPushed)
+        {
+            clawClosed = false;
+            btn7rPushed = true;
+        }
+
+        else if(!C1_7R)
+        {
+            btn7rPushed = false;
+        }
+        
+        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_LAUNCH_HEIGHT || tipped))
         {
             setMotor(claw1, clawControl);
             setMotor(claw2, clawControl);
@@ -284,6 +303,12 @@ void operatorControl()
         {
             setMotor(claw1, -127);
             setMotor(claw2, -127);
+        }
+
+        else if(clawClosed)
+        {
+            setMotor(claw1, 50);
+            setMotor(claw2, 50);
         }
         
         else if(getSensor(armPot))
