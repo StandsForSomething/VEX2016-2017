@@ -31,6 +31,8 @@ sensor powerExpandJumper = {10, DIGITAL, true};
 sensor powerExpand = {1, ANALOG, false};
 sensor autoSelect = {2, ANALOG, false};
 sensor armPot = {3, ANALOG, false};
+sensor claw1Pot = {4, ANALOG, false};
+sensor claw2Pot = {5, ANALOG, false};
 
 //encoders
 encoder encoderLeft;

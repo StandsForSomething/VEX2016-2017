@@ -19,30 +19,19 @@ extern motor claw1;  //port 2, reversed
 extern motor claw2;  //port 9, not reversed
 
 //digital
-extern sensor powerExpandJumper;    //digital port 2, input, reversed
+extern sensor powerExpandJumper;  //digital port 10, input, reversed
 
 
 //analog
-extern sensor powerExpand;         //analog port 1, not reversed
-extern sensor autoSelect;        //analog port 2, not reversed
-extern sensor armPot;
+extern sensor powerExpand;  //analog port 1, not reversed
+extern sensor autoSelect;  //analog port 2, not reversed
+extern sensor armPot;  //analog port 3, not reversed
+extern sensor claw1Pot;  //analog port 4, not reversed
+extern sensor claw2Pot;  //analog port 5, not reversed
 
 
-extern encoder encoderLeft;
-extern encoder encoderRight;
+extern encoder encoderLeft;  //digital ports 8 and 9, reversed
+extern encoder encoderRight;  // digital ports 11 and 12, not reversed
 
 void encoderSetup();
-
-//definition for cortex pins
-#define ENC_RIGHT_TOP 8
-#define ENC_RIGHT_BOT 9
-#define ENC_LEFT_TOP 11
-#define ENC_LEFT_BOT 12
-
-
-#define POWER_EXPAND_JUMP 10       //digital port 2
-
-#define POWER_EXPAND 13            //analog port 1
-#define AUTO_SELECT 14           //analog port 2
-#define ARM_POT 15 //analog port 3
 #endif
