@@ -54,6 +54,7 @@ b * necessarily having to see the code (and therefore causing a multiple definit
 #include "motorsAndSensors.h"
 #include "LCDMenu.h"
 #include "movement.h"
+#include "pController.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
