@@ -4,23 +4,21 @@
 //////////
 
 //left drive motors
-motor LFDrive = {4, false};
-motor LBDrive = {5, false};
+motor LDrive = {5, false};
 
 
 //right drive motors
-motor RFDrive = {6, true};
-motor RBDrive = {7, true};
+motor RDrive = {6, true};
 
 //lift motors
-motor liftLeftY = {3, true};
-motor liftLeft = {2, false};
-motor liftRightY = {8, false};
-motor liftRight = {9, true};
+motor liftLeftY = {4, true};
+motor liftLeft = {3, false};
+motor liftRightY = {7, false};
+motor liftRight = {8, true};
 
 //claw motors
-motor claw1 = {1, false};
-motor claw2 = {10,true};
+motor claw1 = {2, false};
+motor claw2 = {9, true};
 
 ///////////
 //sensors//

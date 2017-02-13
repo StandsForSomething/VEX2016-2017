@@ -195,30 +195,24 @@ void operatorControl()
                 motorTurnSpeed = 0;
             }
 
-            setMotor(LFDrive,  motorSpeed + motorTurnSpeed);
-            setMotor(LBDrive, motorSpeed + motorTurnSpeed);
-            setMotor(RFDrive,  motorSpeed - motorTurnSpeed);
-            setMotor(RBDrive, motorSpeed - motorTurnSpeed);
+            setMotor(LDrive,  motorSpeed + motorTurnSpeed);
+            setMotor(RDrive, motorSpeed - motorTurnSpeed);
         }
 
         else
         {  //deadzones for each of the joysticks to prevent motor whine
             if (abs(C1LY) > 15 || abs(C1LX) >15)
             {
-                setMotor(LFDrive, C1LY + C1RX);
-                setMotor(LBDrive, C1LY + C1RX);
-                setMotor(RFDrive, C1LY - C1RX);
-                setMotor(RBDrive, C1LY - C1RX);
+                setMotor(LDrive, C1LY + C1RX);
+                setMotor(RDrive, C1LY - C1RX);
 
             }
 
             //if joysticks are within deadzones set all drive motors to 0
             else
             {
-                setMotor(LFDrive, 0);
-                setMotor(LBDrive, 0);
-                setMotor(RFDrive, 0);
-                setMotor(RBDrive, 0);
+                setMotor(LDrive, 0);
+                setMotor(RDrive, 0);
             }
         }
         ////////

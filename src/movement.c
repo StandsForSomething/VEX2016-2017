@@ -5,54 +5,38 @@ void controlDrive(int speed, direction dir)
     switch(dir)
     {
     case FORWARD:
-        setMotor(LFDrive, speed);
-        setMotor(LBDrive, speed);
-        setMotor(RFDrive, speed);
-        setMotor(RBDrive, speed);
+        setMotor(LDrive, speed);
+        setMotor(RDrive, speed);
         break;
 
     case BACKWARD:
-        setMotor(LFDrive, -speed);
-        setMotor(LBDrive, -speed);
-        setMotor(RFDrive, -speed);
-        setMotor(RBDrive, -speed);
+        setMotor(LDrive, -speed);
+        setMotor(RDrive, -speed);
         break;
 
     case LEFT_TURN:
-        setMotor(LFDrive, -speed);
-        setMotor(LBDrive, -speed);
-        setMotor(RFDrive, speed);
-        setMotor(RBDrive, speed);
+        setMotor(LDrive, -speed);
+        setMotor(RDrive, speed);
         break;
 
     case RIGHT_TURN:
-        setMotor(LFDrive, speed);
-        setMotor(LBDrive, speed);
-        setMotor(LBDrive, speed);
-        setMotor(RFDrive, -speed);
-        setMotor(RBDrive, -speed);
-        setMotor(RBDrive, -speed);
+        setMotor(LDrive, speed);;
+        setMotor(RDrive, -speed);
         break;
 
     case LEFT_TURN_WIDE:
-        setMotor(LFDrive, 0);
-        setMotor(LBDrive, 0);
-        setMotor(RFDrive, speed);
-        setMotor(RBDrive, speed);
+        setMotor(LDrive, 0);
+        setMotor(RDrive, speed);
         break;
 
     case RIGHT_TURN_WIDE:
-        setMotor(LFDrive, speed);
-        setMotor(LBDrive, speed);
-        setMotor(RFDrive, 0);
-        setMotor(RBDrive, 0);
+        setMotor(LDrive, speed);
+        setMotor(RDrive, 0);
         break;
 
     case STOP:
-        setMotor(LFDrive, 0);
-        setMotor(LBDrive, 0);
-        setMotor(RFDrive, 0);
-        setMotor(RBDrive, 0);
+        setMotor(LDrive, 0);
+        setMotor(RDrive, 0);
         break;
 
     default:
