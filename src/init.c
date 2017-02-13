@@ -73,6 +73,7 @@ void initialize()
     lcdClear(uart1);
     newItem("no auton", NULL);
     newItem("skills", NULL);
+    newItem("dump preload", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");

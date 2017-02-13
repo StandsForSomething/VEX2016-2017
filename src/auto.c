@@ -55,6 +55,7 @@
  */
 
 #define SKILLS 1
+#define DUMP_PRELOAD 2
 
 #define RED false
 #define BLUE true
@@ -81,22 +82,48 @@ void skillsLoads()
 
 void autonomous()
 {
-    switch(currentSelection)
-    {
-    case SKILLS:
-        controlDriveEnc(127, BACKWARD, -2, false);
-        controlClawTime(127, 500);
-        delay(1000);
-        controlDriveEnc(127, FORWARD, 1, false);
-        printf("doing skills loads\n\r");
-        delay(1000);
-        skillsLoads();
-        break;
+    if(getSensor(powerExpand) > 1000)
+        {
+            switch(currentSelection)
+            {
+            case SKILLS:
+                controlDriveEnc(127, BACKWARD, -2, false);
+                controlClawTime(127, 500);
+                delay(1000);
+                controlDriveEnc(127, FORWARD, 1, false);
+                printf("doing skills loads\n\r");
+                delay(1000);
+                skillsLoads();
+                break;
 
-    default:
-        printf("error, selected autonomous doesn't exist\n\r");
-    break;
-    }
+            case DUMP_PRELOAD:
+                
+                controlDriveEnc(127, BACKWARD, -2, false);
+                controlClawTime(127, 500);
+                delay(1000);
+                controlDriveEnc(127, FORWARD, 1, false);
+                printf("doing skills loads\n\r");
+                delay(1000);
+                
+                controlClawTime(127, 1000);
+                controlClaw(50);
+                controlDriveEnc(127, BACKWARD, -6, false);
+                controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
+                while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+                {
+                    delay(20);
+                }
+                controlClaw(-50);
+                controlLiftPot(-127, ARM_MIN_HEIGHT, false);
+                controlClaw(0);
+                controlDriveEnc(127, FORWARD, 6, false);
+                break;
+
+            default:
+                printf("error, selected autonomous doesn't exist\n\r");
+                break;
+            }
+        }
 
     printf("end autonomous\n\r");
 }
