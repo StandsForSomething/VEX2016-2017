@@ -43,7 +43,7 @@
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define MAIN_H_
 
-#define ARM_LAUNCH_HEIGHT 2133
+#define ARM_LAUNCH_HEIGHT 2000
 #define ARM_MIN_HEIGHT 445
 #define ARM_CONST_POWER_HEIGHT 600
 #define ARM_CONST_POWER 15
