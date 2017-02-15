@@ -248,7 +248,8 @@ void operatorControl()
             setMotor(liftRight, liftControl);
         }
 
-        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT)
+        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX ||
+                getSensor(armPot) > ARM_CONST_POWER_HEIGHT_MIN)
         {
             setMotor(liftLeftY, ARM_CONST_POWER);
             setMotor(liftLeft, ARM_CONST_POWER);

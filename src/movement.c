@@ -119,7 +119,8 @@ void controlLiftPotTask(void *funcArgs)
         }
     }
 
-    if(getSensor(armPot) > ARM_CONST_POWER_HEIGHT)
+    if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX ||
+       getSensor(armPot) > ARM_CONST_POWER_HEIGHT_MIN)
     {
         controlLift(ARM_CONST_POWER);
     }
