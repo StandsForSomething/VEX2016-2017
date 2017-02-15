@@ -1,9 +1,9 @@
 /** @file main.h
  * @brief Header file for global functions
- * 
+ *
  * Any experienced C or C++ programmer knows the importance of header files. For those who
  * do not, a header file allows multiple files to reference functions in other files without
-b * necessarily having to see the code (and therefore causing a multiple definition). To make
+ * necessarily having to see the code (and therefore causing a multiple definition). To make
  * a function in "opcontrol.c", "auto.c", "main.c", or any other C file visible to the core
  * implementation files, prototype it here.
  *
@@ -43,9 +43,9 @@ b * necessarily having to see the code (and therefore causing a multiple definit
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define MAIN_H_
 
-#define ARM_LAUNCH_HEIGHT 1800
-#define ARM_MIN_HEIGHT 20
-#define ARM_CONST_POWER_HEIGHT 700
+#define ARM_LAUNCH_HEIGHT 2133
+#define ARM_MIN_HEIGHT 445
+#define ARM_CONST_POWER_HEIGHT 600
 #define ARM_CONST_POWER 15
 
 #include <API.h>
