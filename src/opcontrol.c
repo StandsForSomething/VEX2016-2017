@@ -94,8 +94,6 @@ void operatorControl()
 
     while(1)
     {
-        //printf("%f : %f\n\r", getSensor(claw1Pot), getSensor(claw1Pot));
-        printf("%f\n\r", getSensor(armPot));
         if(!isJoystickConnected(2))
         {
             if(C1_8U && !btn8uPushed && !btn8dPushed)
