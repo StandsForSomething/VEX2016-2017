@@ -239,8 +239,8 @@ void operatorControl()
         }
 
         if(abs(liftControl) > 15 &&
-           (getSensor(armPot) <= (ARM_LAUNCH_HEIGHT) || liftControl < 0) &&
-           (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
+           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
+           && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
         {
             setMotor(liftLeftY, liftControl);
             setMotor(liftLeft, liftControl);
@@ -254,6 +254,14 @@ void operatorControl()
             setMotor(liftLeft, ARM_CONST_POWER);
             setMotor(liftRightY, ARM_CONST_POWER);
             setMotor(liftRight, ARM_CONST_POWER);
+        }
+
+        else if(getSensor(armPot) > ARM_LAUNCH_HEIGHT)
+        {
+            setMotor(liftLeftY, -127);
+            setMotor(liftLeft, -127);
+            setMotor(liftRightY, -127);
+            setMotor(liftRight, -127);
         }
 
         else
