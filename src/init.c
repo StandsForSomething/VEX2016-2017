@@ -66,6 +66,8 @@ void initializeIO()
 
 void initialize()
 {
+    pControllerArgs claw1Args = {0.2, &claw1PidValue, claw1, claw1Pot};
+    pControllerArgs claw2Args = {0.2, &claw2PidValue, claw2, claw2Pot};
     printf("encoders setup\n\r");
     encoderSetup();
     printf("LCD display\n\r");
@@ -76,5 +78,7 @@ void initialize()
     newItem("dump preload", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw1Args, TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw2Args, TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
 }

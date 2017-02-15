@@ -3,11 +3,13 @@
 
 typedef struct pControllerArgs
 {
-    float pid_Kp;
-    float pidValue;
+    double pid_Kp;
+    double *pidValue;
     motor pidMotor;
     sensor pidSensor;
 }pControllerArgs;
 
+extern double claw1PidValue;
+extern double claw2PidValue;
 extern void pidController(void *taskArgs);
 #endif

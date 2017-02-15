@@ -1,5 +1,7 @@
 #include "main.h"
 
+double claw1PidValue;
+double claw2PidValue;
 void pidController(void *taskArgs)
 {
     pControllerArgs* argsPointer = taskArgs;
@@ -7,14 +9,14 @@ void pidController(void *taskArgs)
     float  pidSensorCurrentValue;
     float  pidError;
     float  pidDrive;
-
+    *args.pidValue = getSensor(args.pidSensor);
     while(true)
     {
         // Read the sensor value and scale
         pidSensorCurrentValue = getSensor(args.pidSensor);
 
         // calculate error
-        pidError =  args.pidValue - pidSensorCurrentValue;
+        pidError =  *args.pidValue - pidSensorCurrentValue;
 
         // calculate drive
         pidDrive = (args.pid_Kp * pidError);

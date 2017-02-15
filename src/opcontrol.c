@@ -94,6 +94,8 @@ void operatorControl()
 
     while(1)
     {
+        //printf("%f : %f\n\r", getSensor(claw1Pot), getSensor(claw1Pot));
+        printf("%f\n\r", getSensor(armPot));
         if(!isJoystickConnected(2))
         {
             if(C1_8U && !btn8uPushed && !btn8dPushed)
@@ -283,32 +285,19 @@ void operatorControl()
         {
             btn7rPushed = false;
         }
-        
+
         if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_LAUNCH_HEIGHT || tipped))
         {
-            setMotor(claw1, clawControl);
-            setMotor(claw2, clawControl);
+            claw1PidValue = getSensor(claw1Pot) + (clawControl * 2);
         }
 
-        
+
         else if(getSensor(armPot) >= ARM_LAUNCH_HEIGHT && !tipped)
         {
-            setMotor(claw1, -127);
-            setMotor(claw2, -127);
+            claw1PidValue = 2060;
         }
 
-        else if(clawClosed)
-        {
-            setMotor(claw1, 50);
-            setMotor(claw2, 50);
-        }
-        
-        else if(getSensor(armPot))
-        {
-            setMotor(claw1, 0);
-            setMotor(claw2, 0);
-        }
-
+        claw2PidValue = claw1PidValue;
         //motors can only be updated every 20 milliseconds
         delay(20);
     }
