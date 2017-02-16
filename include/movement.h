@@ -17,5 +17,5 @@ typedef enum direction
 void controlDrive(double target, direction dir, bool waitForTargetReached);
 void controlLift(int speed);
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd);
-void controlClaw(double target);
+void controlClaw(double target, bool waitForTargetReached);
 #endif //MOVEMENT_H_

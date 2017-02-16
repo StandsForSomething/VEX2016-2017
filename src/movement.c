@@ -127,8 +127,17 @@ void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
     printf("exit\n\r");
 }
 
-void controlClaw(double target)
+void controlClaw(double target, bool waitForTargetReached)
 {
     claw1PidValue = target;
     claw2PidValue = target;
+
+    while(waitForTargetReached &&
+          getSensor(claw1Pot) > target + 20 &&
+          getSensor(claw1Pot) < target - 20 &&
+          getSensor(claw2Pot) > target + 20 &&
+          getSensor(claw2Pot) < target - 20)
+    {
+        delay(20);
+    }
 }
