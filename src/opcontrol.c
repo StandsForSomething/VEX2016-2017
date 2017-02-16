@@ -301,7 +301,7 @@ void operatorControl()
 
         else if(getSensor(armPot) >= ARM_LAUNCH_HEIGHT && !tipped)
         {
-            claw1PidValue = 2060;
+            claw1PidValue = CLAW_OPEN_POSITION;
         }
 
         claw2PidValue = claw1PidValue;
