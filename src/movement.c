@@ -1,7 +1,8 @@
 #include "main.h"
 
 void controlDrive(double target, direction dir, bool waitForTargetReached)
-{
+{   encoderReset(encoderLeft.shaftEncoder);
+    encoderReset(encoderRight.shaftEncoder);
     double targetL = 0;
     double targetR = 0;
     switch(dir)
