@@ -61,11 +61,11 @@
 #define BLUE true
 bool color = BLUE;
 
-void skillsLoads()
+void loads(int loads)
 {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < 2; i++)
     {
-        controlClawTime(127, 1000);
+        /*controlClawTime(127, 1000);
         controlClaw(50);
         controlDriveEnc(127, BACKWARD, -6, false);
         controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
@@ -75,7 +75,7 @@ void skillsLoads()
         }
         controlClaw(-50);
         controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-        controlDriveEnc(127, FORWARD, 6, false);
+        controlDriveEnc(127, FORWARD, 6, false);*/
         delay(1000);
     }
 }
@@ -87,36 +87,16 @@ void autonomous()
             switch(currentSelection)
             {
             case SKILLS:
-                controlDriveEnc(127, BACKWARD, -2, false);
+                /* controlDriveEnc(127, BACKWARD, -2, false);
                 controlClawTime(127, 500);
                 delay(1000);
                 controlDriveEnc(127, FORWARD, 1, false);
                 printf("doing skills loads\n\r");
                 delay(1000);
-                skillsLoads();
+                skillsLoads();*/
                 break;
 
             case DUMP_PRELOAD:
-                
-                controlDriveEnc(127, BACKWARD, -2, false);
-                controlClawTime(127, 500);
-                delay(1000);
-                controlDriveEnc(127, FORWARD, 1, false);
-                printf("doing skills loads\n\r");
-                delay(1000);
-                
-                controlClawTime(127, 1000);
-                controlClaw(50);
-                controlDriveEnc(127, BACKWARD, -6, false);
-                controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
-                while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
-                {
-                    delay(20);
-                }
-                controlClaw(-50);
-                controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-                controlClaw(0);
-                controlDriveEnc(127, FORWARD, 6, false);
                 break;
 
             default:

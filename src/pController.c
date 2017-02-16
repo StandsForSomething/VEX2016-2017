@@ -2,6 +2,9 @@
 
 double claw1PidValue;
 double claw2PidValue;
+double driveLPidValue;
+double driveRPidValue;
+
 void pidController(void *taskArgs)
 {
     pControllerArgs* argsPointer = taskArgs;

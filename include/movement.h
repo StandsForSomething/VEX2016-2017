@@ -7,15 +7,15 @@ typedef enum direction
     LEFT_TURN,
     RIGHT_TURN,
     LEFT_TURN_WIDE,
+    LEFT_TURN_WIDE_BACKWARD,
     RIGHT_TURN_WIDE,
+    RIGHT_TURN_WIDE_BACKWARD,
     STOP
     }direction;
 
 //function prototypes
-void controlDrive(int speed, direction dir);
-void controlDriveEnc(int speed, direction dir, double counts, bool antiDrift);
+void controlDrive(double target, direction dir, bool waitForTargetReached);
 void controlLift(int speed);
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd);
-void controlClaw(int speed);
-void controlClawTime(int speed, int timeMS);
+void controlClaw(double target);
 #endif //MOVEMENT_H_

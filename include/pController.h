@@ -11,5 +11,8 @@ typedef struct pControllerArgs
 
 extern double claw1PidValue;
 extern double claw2PidValue;
+extern double driveLPidValue;
+extern double driveRPidValue;
+
 extern void pidController(void *taskArgs);
 #endif

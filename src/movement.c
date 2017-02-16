@@ -1,87 +1,65 @@
 #include "main.h"
 
-void controlDrive(int speed, direction dir)
+void controlDrive(double target, direction dir, bool waitForTargetReached)
 {
+    double targetL = 0;
+    double targetR = 0;
     switch(dir)
     {
     case FORWARD:
-        setMotor(LDrive, speed);
-        setMotor(RDrive, speed);
-        break;
+        //fallthrough
 
     case BACKWARD:
-        setMotor(LDrive, -speed);
-        setMotor(RDrive, -speed);
+        targetL = target;
+        targetR = target;
         break;
 
     case LEFT_TURN:
-        setMotor(LDrive, -speed);
-        setMotor(RDrive, speed);
+        targetL = -target;
+        targetR = target;
         break;
 
     case RIGHT_TURN:
-        setMotor(LDrive, speed);;
-        setMotor(RDrive, -speed);
+        targetL = target;
+        targetR = -target;
         break;
 
     case LEFT_TURN_WIDE:
-        setMotor(LDrive, 0);
-        setMotor(RDrive, speed);
+        targetR = target;
         break;
 
-    case RIGHT_TURN_WIDE:
-        setMotor(LDrive, speed);
-        setMotor(RDrive, 0);
+    case LEFT_TURN_WIDE_BACKWARD:
+        targetL = -target;
         break;
+        
+    case RIGHT_TURN_WIDE:
+        targetL = target;
+        break;
+
+    case RIGHT_TURN_WIDE_BACKWARD:
+        targetR = -target;
 
     case STOP:
-        setMotor(LDrive, 0);
-        setMotor(RDrive, 0);
+        
+        targetL = getSensor(encoderLeft.parent);
+        targetR = getSensor(encoderRight.parent);
         break;
 
     default:
         return;
         break;
     }
-}
-void controlDriveEnc(int speed, direction dir, double counts, bool antiDrift)
-{
-    encoderReset(encoderRight.shaftEncoder);
-    encoderReset(encoderLeft.shaftEncoder);
-    controlDrive(speed, dir);
-    if(dir == LEFT_TURN_WIDE)
-    {
-        while(getEncoder(encoderRight) < counts)
-        {
-            printf("%f\n\r", getEncoder(encoderRight));
-            delay(20);
-        }
-    }
 
-    else if(dir == BACKWARD || dir == LEFT_TURN || counts < 0)
+    driveLPidValue = targetL;
+    driveRPidValue = targetR;
+    while(waitForTargetReached &&
+          getSensor(encoderLeft.parent) > targetL + 20 &&
+          getSensor(encoderLeft.parent) < targetL - 20 &&
+          getSensor(encoderRight.parent) > targetR + 20 &&
+          getSensor(encoderRight.parent) < targetR - 20)
     {
-        while(getEncoder(encoderLeft) > counts)
-        {
-           printf("%f\n\r", getEncoder(encoderLeft));
-            delay(20);
-        }
+        delay(20);
     }
-
-    else
-    {
-        while(getEncoder(encoderLeft) < counts)
-        {
-            printf("%f\n\r", getEncoder(encoderLeft));
-            delay(20);
-        }
-    }
-
-    if(antiDrift)
-    {
-        controlDrive(-speed, dir);
-        delay(400);
-    }
-    controlDrive(0, STOP);
 }
 
 void controlLift(int speed)
@@ -149,15 +127,8 @@ void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
     printf("exit\n\r");
 }
 
-void controlClaw(int speed)
+void controlClaw(double target)
 {
-    setMotor(claw1, speed);
-    setMotor(claw2, speed);
-}
-
-void controlClawTime(int speed, int timeMS)
-{
-    controlClaw(speed);
-    delay(timeMS);
-    controlClaw(0);
+    claw1PidValue = target;
+    claw2PidValue = target;
 }
