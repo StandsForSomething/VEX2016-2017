@@ -94,6 +94,7 @@ void operatorControl()
 
     while(1)
     {
+        printf("%f\n\r", getSensor(armPot));
         if(!isJoystickConnected(2))
         {
             if(C1_8U && !btn8uPushed && !btn8dPushed)
@@ -276,30 +277,14 @@ void operatorControl()
         ////////
         //claw//
         ////////
-        if(C1_7R && !clawClosed && !btn7rPushed)
-        {
-            clawClosed = true;
-            btn7rPushed = true;
-        }
 
-        else if(C1_7R && clawClosed && !btn7rPushed)
+        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT || tipped))
         {
-            clawClosed = false;
-            btn7rPushed = true;
-        }
-
-        else if(!C1_7R)
-        {
-            btn7rPushed = false;
-        }
-
-        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_LAUNCH_HEIGHT || tipped))
-        {
-            claw1PidValue = getSensor(claw1Pot) + (clawControl * 2);
+            claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
         }
 
 
-        else if(getSensor(armPot) >= ARM_LAUNCH_HEIGHT && !tipped)
+        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped)
         {
             claw1PidValue = CLAW_OPEN_POSITION;
         }
