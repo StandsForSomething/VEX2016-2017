@@ -88,7 +88,9 @@ void autonomous()
             {
             case SKILLS:
                 controlDrive(-2, BACKWARD, true);
+                controlLiftPot(127, 700, true);
                 controlClaw(CLAW_OPEN_POSITION, false);
+                controlLiftPot(-127, ARM_MIN_HEIGHT, false);
                 delay(1000);
                 controlDrive(1, FORWARD, true);
                 loads(3);
