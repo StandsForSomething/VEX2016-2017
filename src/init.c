@@ -82,7 +82,7 @@ void initialize()
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw1Args, TASK_PRIORITY_DEFAULT);
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw2Args, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
+    //taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
+    //taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
 }
