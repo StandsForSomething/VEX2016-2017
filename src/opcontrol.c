@@ -94,9 +94,9 @@ void operatorControl()
 
     while(1)
     {
-        printf("%f\n\r", getSensor(armPot));
         if(!isJoystickConnected(2))
         {
+            /*
             if(C1_8U && !btn8uPushed && !btn8dPushed)
             {
                 driveSpeed += 10;
@@ -139,7 +139,7 @@ void operatorControl()
             else if(!C1_8L && btn8lPushed)
             {
                 btn8lPushed = false;
-            }
+                }*/
 
             if(C1_5U && !btn5uPushed && !btn5dPushed)
             {
