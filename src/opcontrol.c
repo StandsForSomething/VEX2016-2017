@@ -79,6 +79,7 @@ void operatorControl()
     bool btn8rPushed = false;
     bool btn7rPushed = false;
     bool tipped = false;
+    bool hanging = false;
     bool clawClosed = false;
     
     //in the case that the power expander isn't plugged in don't continue until
@@ -229,7 +230,7 @@ void operatorControl()
             clawControl = C2RY;
         }
 
-        if(C1_7L)
+        if(C1_8R)
         {
             tipped = true;
         }
@@ -239,8 +240,26 @@ void operatorControl()
             tipped = false;
         }
 
+        if(C1_8U && !btn8uPushed && !hanging)
+        {
+            hanging = true;
+            btn8uPushed = true;
+        }
+
+        if(C1_8U && !btn8uPushed && hanging)
+        {
+            hanging = false;
+            btn8uPushed = true;
+        }
+
+        else if(!C1_8U && btn8uPushed)
+        {
+            btn8uPushed = false;
+        }
+
         if(abs(liftControl) > 15 &&
-           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
+           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 ||
+            tipped || hanging )
            && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
         {
             setMotor(liftLeftY, liftControl);
@@ -278,7 +297,8 @@ void operatorControl()
         //claw//
         ////////
 
-        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT || tipped))
+        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT ||
+                                     tipped | hanging))
         {
             claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
         }
@@ -287,6 +307,11 @@ void operatorControl()
         else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped)
         {
             claw1PidValue = CLAW_OPEN_POSITION;
+        }
+
+        else if(getSensor(armPot) < ARM_MIN_HEIGHT + 15 && hanging)
+        {
+            claw1PidValue = CLAW_HANG_LOCK_POSITION;
         }
 
         claw2PidValue = claw1PidValue;

@@ -51,7 +51,8 @@
 #define ARM_CONST_POWER 15
 
 #define CLAW_OPEN_POSITION 2060
-#define CLAW_CLOSE_POSITION 200
+#define CLAW_CLOSE_POSITION 3000
+#define CLAW_HANG_LOCK_POSITION 200
 
 #include <API.h>
 #include "hardwareAbstraction.h"
