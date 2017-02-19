@@ -59,6 +59,7 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
           getSensor(encoderRight.parent) > targetR + 20 &&
           getSensor(encoderRight.parent) < targetR - 20)
     {
+        printf("%f : %f\n\r", getSensor(encoderLeft.parent), getSensor(encoderRight.parent));
         delay(20);
     }
 }

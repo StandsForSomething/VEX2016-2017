@@ -56,6 +56,7 @@
 
 #define SKILLS 1
 #define DUMP_PRELOAD 2
+#define TEST 3
 
 #define RED false
 #define BLUE true
@@ -97,6 +98,13 @@ void autonomous()
                 break;
 
             case DUMP_PRELOAD:
+                break;
+
+            case TEST:
+                controlDrive(-1320, FORWARD, true);/*
+                controlDrive(-1320, BACKWARD, true);
+                controlDrive(1320, LEFT_TURN, true);
+                controlDrive(1320, RIGHT_TURN, true);*/
                 break;
 
             default:

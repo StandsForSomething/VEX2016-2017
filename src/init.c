@@ -68,8 +68,8 @@ void initialize()
 {
     pControllerArgs claw1Args = {0.2, &claw1PidValue, claw1, claw1Pot};
     pControllerArgs claw2Args = {0.2, &claw2PidValue, claw2, claw2Pot};
-    pControllerArgs driveLArgs = {0.5, &driveLPidValue, LDrive, encoderLeft.parent};
-    pControllerArgs driveRArgs = {0.5, &driveLPidValue, RDrive, encoderRight.parent};
+    pControllerArgs driveLArgs = {0.025, &driveLPidValue, LDrive, encoderLeft.parent};
+    pControllerArgs driveRArgs = {0.025, &driveRPidValue, RDrive, encoderRight.parent};
     printf("encoders setup\n\r");
     encoderSetup();
     printf("LCD display\n\r");
@@ -78,11 +78,12 @@ void initialize()
     newItem("no auton", NULL);
     newItem("skills", NULL);
     newItem("dump preload", NULL);
+    newItem("test", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw1Args, TASK_PRIORITY_DEFAULT);
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw2Args, TASK_PRIORITY_DEFAULT);
-    //taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
-    //taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
 }
