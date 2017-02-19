@@ -66,12 +66,16 @@ void initializeIO()
 
 void initialize()
 {
-    pControllerArgs claw1Args = {0.2, &claw1PidValue, claw1, claw1Pot};
-    pControllerArgs claw2Args = {0.2, &claw2PidValue, claw2, claw2Pot};
-    pControllerArgs driveLArgs = {0.025, &driveLPidValue, LDrive, encoderLeft.parent};
-    pControllerArgs driveRArgs = {0.025, &driveRPidValue, RDrive, encoderRight.parent};
     printf("encoders setup\n\r");
     encoderSetup();
+    static pControllerArgs claw1Args;
+    claw1Args = (pControllerArgs){0.2, &claw1PidValue, claw1, claw1Pot};
+    static pControllerArgs claw2Args;
+    claw2Args = (pControllerArgs){0.2, &claw2PidValue, claw2, claw2Pot};
+    static pControllerArgs driveLArgs;
+    driveLArgs = (pControllerArgs){0.5, &driveLPidValue, LDrive, encoderLeft.parent};
+    static pControllerArgs driveRArgs;
+    driveRArgs = (pControllerArgs){0.5, &driveRPidValue, RDrive, encoderRight.parent};
     printf("LCD display\n\r");
     lcdInit(uart1);
     lcdClear(uart1);
