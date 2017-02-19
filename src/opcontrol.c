@@ -230,14 +230,21 @@ void operatorControl()
             clawControl = C2RY;
         }
 
-        if(C1_8R)
+        if(C1_8L && !btn8lPushed && !tipped)
         {
             tipped = true;
+            btn8lPushed = true;
         }
 
-        else
+        else if(C1_8L && !btn8lPushed && tipped)
         {
             tipped = false;
+            btn8lPushed = true;
+        }
+
+        else if(!C1_8L && btn8lPushed)
+        {
+            btn8lPushed = false;
         }
 
         if(C1_8U && !btn8uPushed && !hanging)
@@ -268,22 +275,14 @@ void operatorControl()
             setMotor(liftRight, liftControl);
         }
 
-        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX ||
+        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX &&
                 getSensor(armPot) > ARM_CONST_POWER_HEIGHT_MIN)
         {
             setMotor(liftLeftY, ARM_CONST_POWER);
             setMotor(liftLeft, ARM_CONST_POWER);
             setMotor(liftRightY, ARM_CONST_POWER);
             setMotor(liftRight, ARM_CONST_POWER);
-        }
-
-        else if(getSensor(armPot) > ARM_LAUNCH_HEIGHT)
-        {
-            setMotor(liftLeftY, -127);
-            setMotor(liftLeft, -127);
-            setMotor(liftRightY, -127);
-            setMotor(liftRight, -127);
-        }
+            }
 
         else
         {
@@ -298,13 +297,13 @@ void operatorControl()
         ////////
 
         if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT ||
-                                     tipped | hanging))
+                                     tipped || hanging))
         {
             claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
         }
 
 
-        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped)
+        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped && !hanging)
         {
             claw1PidValue = CLAW_OPEN_POSITION;
         }
