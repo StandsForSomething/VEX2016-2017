@@ -75,7 +75,7 @@ void operatorControl()
     bool btn6dPushed = false;
     bool btn8uPushed = false;
     bool tipped = false;
-    
+
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
@@ -86,6 +86,9 @@ void operatorControl()
         printf("power expander unplugged!\n\r");
         delay(1000);
     }
+
+    taskSuspend(driveLPID);
+    taskSuspend(driveRPID);
 
     while(1)
     {

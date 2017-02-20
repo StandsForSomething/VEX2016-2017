@@ -84,24 +84,49 @@ void loads(int loads)
 void autonomous()
 {
     if(getSensor(powerExpand) > 1000)
+    {
+        static pControllerArgs driveLArgs;
+        driveLArgs = (pControllerArgs){0.5, &driveLPidValue, LDrive, encoderLeft.parent};
+        static pControllerArgs driveRArgs;
+        driveRArgs = (pControllerArgs){0.5, &driveRPidValue, RDrive, encoderRight.parent};
+
+        if(taskGetState(driveLPID) == TASK_SUSPENDED)
         {
-            switch(currentSelection)
-            {
-            case SKILLS:
-                controlDrive(-2, BACKWARD, true);
-                controlLiftPot(127, 700, true);
-                controlClaw(CLAW_OPEN_POSITION, false);
-                controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-                delay(1000);
-                controlDrive(1, FORWARD, true);
-                loads(3);
-                break;
+            taskResume(driveLPID);
+        }
 
-            case DUMP_PRELOAD:
-                break;
+        else if(taskGetState(driveLPID) != TASK_RUNNING)
+        {
+            driveLPID = taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
+        }
 
-            case TEST:
-                controlDrive(-1320, FORWARD, true);/*
+        if(taskGetState(driveRPID) == TASK_SUSPENDED)
+        {
+            taskResume(driveRPID);
+        }
+
+        else if(taskGetState(driveRPID) != TASK_RUNNING)
+        {
+            driveRPID = taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
+        }
+
+        switch(currentSelection)
+        {
+        case SKILLS:
+            controlDrive(-2, BACKWARD, true);
+            controlLiftPot(127, 700, true);
+            controlClaw(CLAW_OPEN_POSITION, false);
+            controlLiftPot(-127, ARM_MIN_HEIGHT, false);
+            delay(1000);
+            controlDrive(1, FORWARD, true);
+            loads(3);
+            break;
+
+        case DUMP_PRELOAD:
+            break;
+
+        case TEST:
+            controlDrive(-1320, FORWARD, true);/*
                 controlDrive(-1320, BACKWARD, true);
                 controlDrive(1320, LEFT_TURN, true);
                 controlDrive(1320, RIGHT_TURN, true);*/
