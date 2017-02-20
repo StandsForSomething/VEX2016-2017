@@ -74,13 +74,7 @@ void operatorControl()
     bool btn6uPushed = false;
     bool btn6dPushed = false;
     bool btn8uPushed = false;
-    bool btn8dPushed = false;
-    bool btn8lPushed = false;
-    bool btn8rPushed = false;
-    bool btn7rPushed = false;
     bool tipped = false;
-    bool hanging = false;
-    bool clawClosed = false;
     
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
@@ -95,167 +89,91 @@ void operatorControl()
 
     while(1)
     {
-        if(!isJoystickConnected(2))
+        if(C1_5U && !btn5uPushed && !btn5dPushed)
         {
-            /*
-            if(C1_8U && !btn8uPushed && !btn8dPushed)
-            {
-                driveSpeed += 10;
-                btn8uPushed = true;
-            }
-
-            else if(!C1_8U && btn8uPushed)
-            {
-                btn8uPushed = false;
-            }
-
-            else if(C1_8D && !btn8dPushed && !btn8uPushed)
-            {
-                driveSpeed -= 10;
-                btn8dPushed = true;
-            }
-
-            else if(!C1_8D && btn8dPushed)
-            {
-                btn8dPushed = false;
-            }
-
-            if(C1_8R && !btn8rPushed && !btn8lPushed)
-            {
-                turnSpeed -= 10;
-                btn8rPushed = true;
-            }
-
-            else if(!C1_8R && btn8rPushed)
-            {
-                btn8rPushed = false;
-            }
-
-            else if(C1_8L && !btn8lPushed && !btn8rPushed)
-            {
-                driveSpeed += 10;
-                btn8lPushed = true;
-            }
-
-            else if(!C1_8L && btn8lPushed)
-            {
-                btn8lPushed = false;
-                }*/
-
-            if(C1_5U && !btn5uPushed && !btn5dPushed)
-            {
-                motorSpeed = driveSpeed;
-                btn5uPushed = true;
-            }
-
-            else if(!C1_5U && btn5uPushed)
-            {
-                btn5uPushed = false;
-            }
-
-            else if(C1_5D && !btn5dPushed && !btn5uPushed)
-            {
-                motorSpeed = -driveSpeed;
-                btn5dPushed = true;
-            }
-
-            else if(!C1_5D && btn5dPushed)
-            {
-                btn5dPushed = false;
-            }
-
-            if(!C1_5U && !C1_5D)
-            {
-                motorSpeed = 0;
-            }
-
-            if(C1_6U && !btn6uPushed && !btn6dPushed)
-            {
-                motorTurnSpeed = turnSpeed;
-                btn6uPushed = true;
-            }
-            else if(!C1_6U && btn6uPushed)
-            {
-                btn6uPushed = false;
-            }
-
-            else if(C1_6D && !btn6dPushed && !btn6uPushed)
-            {
-                motorTurnSpeed = -turnSpeed;
-                btn6dPushed = true;
-            }
-
-            else if(!C1_6D && btn6dPushed)
-            {
-                btn6dPushed = false;
-            }
-
-            if(!C1_6U && !C1_6D)
-            {
-                motorTurnSpeed = 0;
-            }
-
-            setMotor(LDrive,  motorSpeed + motorTurnSpeed);
-            setMotor(RDrive, motorSpeed - motorTurnSpeed);
+            motorSpeed = driveSpeed;
+            btn5uPushed = true;
         }
 
+        else if(!C1_5U && btn5uPushed)
+        {
+            btn5uPushed = false;
+        }
+
+        else if(C1_5D && !btn5dPushed && !btn5uPushed)
+        {
+            motorSpeed = -driveSpeed;
+            btn5dPushed = true;
+        }
+
+        else if(!C1_5D && btn5dPushed)
+        {
+            btn5dPushed = false;
+        }
+
+        if(!C1_5U && !C1_5D)
+        {
+            motorSpeed = 0;
+        }
+
+        if(C1_6U && !btn6uPushed && !btn6dPushed)
+        {
+            motorTurnSpeed = turnSpeed;
+            btn6uPushed = true;
+        }
+        else if(!C1_6U && btn6uPushed)
+        {
+            btn6uPushed = false;
+        }
+
+        else if(C1_6D && !btn6dPushed && !btn6uPushed)
+        {
+            motorTurnSpeed = -turnSpeed;
+            btn6dPushed = true;
+        }
+
+        else if(!C1_6D && btn6dPushed)
+        {
+            btn6dPushed = false;
+        }
+
+        if(!C1_6U && !C1_6D)
+        {
+            motorTurnSpeed = 0;
+        }
+
+        setMotor(LDrive,  motorSpeed + motorTurnSpeed);
+        setMotor(RDrive, motorSpeed - motorTurnSpeed);
+        //deadzones for each of the joysticks to prevent motor whine
+        if (abs(C1LY) > 15 || abs(C1LX) >15)
+        {
+            setMotor(LDrive, C1LY + C1RX);
+            setMotor(RDrive, C1LY - C1RX);
+
+        }
+
+        //if joysticks are within deadzones set all drive motors to 0
         else
-        {  //deadzones for each of the joysticks to prevent motor whine
-            if (abs(C1LY) > 15 || abs(C1LX) >15)
-            {
-                setMotor(LDrive, C1LY + C1RX);
-                setMotor(RDrive, C1LY - C1RX);
-
-            }
-
-            //if joysticks are within deadzones set all drive motors to 0
-            else
-            {
-                setMotor(LDrive, 0);
-                setMotor(RDrive, 0);
-            }
+        {
+            setMotor(LDrive, 0);
+            setMotor(RDrive, 0);
         }
+            
         ////////
         //lift//
         ////////
-        if(!isJoystickConnected(2))
-        {
-            liftControl = C1LY;
-            clawControl = C1RY;
-        }
+        liftControl = C1LY;
+        clawControl = C1RY;
 
-        else
-        {
-            liftControl = C2LY;
-            clawControl = C2RY;
-        }
-
-        if(C1_8L && !btn8lPushed && !tipped)
+        if(C1_8U && !btn8uPushed && !tipped)
         {
             tipped = true;
-            btn8lPushed = true;
-        }
-
-        else if(C1_8L && !btn8lPushed && tipped)
-        {
-            tipped = false;
-            btn8lPushed = true;
-        }
-
-        else if(!C1_8L && btn8lPushed)
-        {
-            btn8lPushed = false;
-        }
-
-        if(C1_8U && !btn8uPushed && !hanging)
-        {
-            hanging = true;
             btn8uPushed = true;
         }
 
-        if(C1_8U && !btn8uPushed && hanging)
+        if(C1_8U && !btn8uPushed && tipped)
         {
-            hanging = false;
+            tipped = false;
             btn8uPushed = true;
         }
 
@@ -265,8 +183,7 @@ void operatorControl()
         }
 
         if(abs(liftControl) > 15 &&
-           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 ||
-            tipped || hanging )
+           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
            && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
         {
             setMotor(liftLeftY, liftControl);
@@ -282,7 +199,7 @@ void operatorControl()
             setMotor(liftLeft, ARM_CONST_POWER);
             setMotor(liftRightY, ARM_CONST_POWER);
             setMotor(liftRight, ARM_CONST_POWER);
-            }
+        }
 
         else
         {
@@ -297,20 +214,15 @@ void operatorControl()
         ////////
 
         if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT ||
-                                     tipped || hanging))
+                                     tipped))
         {
             claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
         }
 
 
-        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped && !hanging)
+        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped)
         {
             claw1PidValue = CLAW_OPEN_POSITION;
-        }
-
-        else if(getSensor(armPot) < ARM_MIN_HEIGHT + 15 && hanging)
-        {
-            claw1PidValue = CLAW_HANG_LOCK_POSITION;
         }
 
         claw2PidValue = claw1PidValue;

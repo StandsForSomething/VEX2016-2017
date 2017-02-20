@@ -52,7 +52,6 @@
 
 #define CLAW_OPEN_POSITION 2060
 #define CLAW_CLOSE_POSITION 3000
-#define CLAW_HANG_LOCK_POSITION 200
 
 #include <API.h>
 #include "hardwareAbstraction.h"
@@ -67,11 +66,12 @@
 extern "C" {
 #endif
 
+
+
 // A function prototype looks exactly like its declaration, but with a semicolon instead of
 // actual code. If a function does not match a prototype, compile errors will occur.
 
 // Prototypes for initialization, operator control and autonomous
-
 /**
  * Runs the user autonomous code. This function will be started in its own task with the default
  * priority and stack size whenever the robot is enabled via the Field Management System or the
