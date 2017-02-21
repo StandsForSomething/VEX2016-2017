@@ -56,10 +56,10 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
     driveLPidValue = targetL;
     driveRPidValue = targetR;
     while(waitForTargetReached &&
-          abs(getSensor(encoderLeft.parent)) >abs(targetL) + 20 &&
-          abs(getSensor(encoderLeft.parent)) < abs(targetL) - 20 &&
-          abs(getSensor(encoderRight.parent)) > abs(targetR) + 20 &&
-          abs(getSensor(encoderRight.parent)) < abs(targetR) - 20)
+          (abs(getSensor(encoderLeft.parent)) > abs(targetL) + 20 ||
+          abs(getSensor(encoderLeft.parent)) < abs(targetL) - 20 ||
+          abs(getSensor(encoderRight.parent)) > abs(targetR) + 20 ||
+           abs(getSensor(encoderRight.parent)) < abs(targetR) - 20))
     {
         printf("%f : %f\n\r", getSensor(encoderLeft.parent), getSensor(encoderRight.parent));
         delay(20);
@@ -137,10 +137,10 @@ void controlClaw(double target, bool waitForTargetReached)
     claw2PidValue = target;
 
     while(waitForTargetReached &&
-          getSensor(claw1Pot) > target + 20 &&
-          getSensor(claw1Pot) < target - 20 &&
-          getSensor(claw2Pot) > target + 20 &&
-          getSensor(claw2Pot) < target - 20)
+          (getSensor(claw1Pot) > target + 20 ||
+           getSensor(claw1Pot) < target - 20 ||
+           getSensor(claw2Pot) > target + 20 ||
+           getSensor(claw2Pot) < target - 20))
     {
         delay(20);
     }
