@@ -67,7 +67,7 @@ void loads(int loads)
     for(int i = 0; i < loads; i++)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
-        controlDrive(-6, BACKWARD, false);
+        controlDrive(4000, BACKWARD, false);
         delay(1500);
         controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
         while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
@@ -76,7 +76,7 @@ void loads(int loads)
         }
         controlClaw(CLAW_OPEN_POSITION, false);
         controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-        controlDrive(6, FORWARD, true);
+        controlDrive(4000, FORWARD, true);
         delay(1000);
     }
 }
@@ -89,12 +89,10 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
-            controlDrive(-2, BACKWARD, true);
-            controlLiftPot(127, 700, true);
+            controlDrive(1000, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, false);
-            controlLiftPot(-127, ARM_MIN_HEIGHT, false);
             delay(1000);
-            controlDrive(1, FORWARD, true);
+            controlDrive(500, FORWARD, true);
             loads(3);
             break;
 
