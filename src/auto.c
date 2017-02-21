@@ -117,6 +117,5 @@ void autonomous()
                 break;
             }
         }
-    disableDrivePid = true;
     printf("end autonomous\n\r");
 }
