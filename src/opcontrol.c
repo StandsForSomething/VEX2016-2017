@@ -87,9 +87,6 @@ void operatorControl()
         delay(1000);
     }
 
-    taskSuspend(driveLPID);
-    taskSuspend(driveRPID);
-
     while(1)
     {
         if(C1_5U && !btn5uPushed && !btn5dPushed)
@@ -147,21 +144,7 @@ void operatorControl()
 
         setMotor(LDrive,  motorSpeed + motorTurnSpeed);
         setMotor(RDrive, motorSpeed - motorTurnSpeed);
-        //deadzones for each of the joysticks to prevent motor whine
-        if (abs(C1LY) > 15 || abs(C1LX) >15)
-        {
-            setMotor(LDrive, C1LY + C1RX);
-            setMotor(RDrive, C1LY - C1RX);
 
-        }
-
-        //if joysticks are within deadzones set all drive motors to 0
-        else
-        {
-            setMotor(LDrive, 0);
-            setMotor(RDrive, 0);
-        }
-            
         ////////
         //lift//
         ////////

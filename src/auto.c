@@ -85,31 +85,7 @@ void autonomous()
 {
     if(getSensor(powerExpand) > 1000)
     {
-        static pControllerArgs driveLArgs;
-        driveLArgs = (pControllerArgs){0.5, &driveLPidValue, LDrive, encoderLeft.parent};
-        static pControllerArgs driveRArgs;
-        driveRArgs = (pControllerArgs){0.5, &driveRPidValue, RDrive, encoderRight.parent};
-
-        if(taskGetState(driveLPID) == TASK_SUSPENDED)
-        {
-            taskResume(driveLPID);
-        }
-
-        else if(taskGetState(driveLPID) != TASK_RUNNING)
-        {
-            driveLPID = taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
-        }
-
-        if(taskGetState(driveRPID) == TASK_SUSPENDED)
-        {
-            taskResume(driveRPID);
-        }
-
-        else if(taskGetState(driveRPID) != TASK_RUNNING)
-        {
-            driveRPID = taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
-        }
-
+        disableDrivePid = false;
         switch(currentSelection)
         {
         case SKILLS:
@@ -127,16 +103,17 @@ void autonomous()
 
         case TEST:
             controlDrive(-1320, FORWARD, true);/*
-                controlDrive(-1320, BACKWARD, true);
-                controlDrive(1320, LEFT_TURN, true);
-                controlDrive(1320, RIGHT_TURN, true);*/
-                break;
+            controlDrive(-1320, BACKWARD, true);
+            controlDrive(1320, LEFT_TURN, true);
+            controlDrive(1320, RIGHT_TURN, true);*/
+            delay(10000);
+            break;
 
             default:
                 printf("error, selected autonomous doesn't exist\n\r");
                 break;
             }
         }
-
+    disableDrivePid = true;
     printf("end autonomous\n\r");
 }

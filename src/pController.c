@@ -1,9 +1,14 @@
 #include "main.h"
 
 double claw1PidValue;
+bool disableClaw1Pid = false;
+
 double claw2PidValue;
+bool disableClaw2Pid = false;
+
 double driveLPidValue;
 double driveRPidValue;
+bool disableDrivePid = true;
 
 void pidController(void *taskArgs)
 {
@@ -30,8 +35,11 @@ void pidController(void *taskArgs)
         if(pidDrive < -127)
             pidDrive = -127;
 
-        // send to motors
-        setMotor(args.pidMotor, pidDrive);
+        if(!*args.disabled)
+        {
+            // send to motor
+            setMotor(args.pidMotor, pidDrive);
+        }
 
         // Don't hog cpu
         delay(20);

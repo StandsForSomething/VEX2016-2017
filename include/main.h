@@ -61,9 +61,6 @@
 #include "movement.h"
 #include "pController.h"
 
-TaskHandle driveLPID;
-TaskHandle driveRPID;
-
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
 extern "C" {
