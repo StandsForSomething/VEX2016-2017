@@ -102,11 +102,14 @@ void autonomous()
             break;
 
         case TEST:
-            controlDrive(-1320, FORWARD, true);/*
-            controlDrive(-1320, BACKWARD, true);
+            controlDrive(1320, FORWARD, true);
+            delay(1000);
+            controlDrive(1320, BACKWARD, true);
+            delay(1000);
             controlDrive(1320, LEFT_TURN, true);
-            controlDrive(1320, RIGHT_TURN, true);*/
-            delay(10000);
+            delay(1000);
+            controlDrive(1320, RIGHT_TURN, true);
+            delay(1000);
             break;
 
             default:

@@ -8,11 +8,13 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
     switch(dir)
     {
     case FORWARD:
-        //fallthrough
-
-    case BACKWARD:
         targetL = target;
         targetR = target;
+        break;
+
+    case BACKWARD:
+        targetL = -target;
+        targetR = -target;
         break;
 
     case LEFT_TURN:
@@ -54,10 +56,10 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
     driveLPidValue = targetL;
     driveRPidValue = targetR;
     while(waitForTargetReached &&
-          getSensor(encoderLeft.parent) > targetL + 20 &&
-          getSensor(encoderLeft.parent) < targetL - 20 &&
-          getSensor(encoderRight.parent) > targetR + 20 &&
-          getSensor(encoderRight.parent) < targetR - 20)
+          abs(getSensor(encoderLeft.parent)) >abs(targetL) + 20 &&
+          abs(getSensor(encoderLeft.parent)) < abs(targetL) - 20 &&
+          abs(getSensor(encoderRight.parent)) > abs(targetR) + 20 &&
+          abs(getSensor(encoderRight.parent)) < abs(targetR) - 20)
     {
         printf("%f : %f\n\r", getSensor(encoderLeft.parent), getSensor(encoderRight.parent));
         delay(20);
