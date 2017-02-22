@@ -169,6 +169,7 @@ void operatorControl()
             btn8uPushed = false;
         }
 
+        
         if(abs(liftControl) > 15 &&
            (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
            && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
@@ -200,19 +201,22 @@ void operatorControl()
         //claw//
         ////////
 
-        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT ||
-                                     tipped))
+        if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT))
         {
-            claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
+            claw1PidValue = getSensor(claw1Pot) + (claw1Control * 4);
+            claw2pidValue = getSensor(claw2Pot) + (claw2Control * 4);
         }
 
-
-        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT && !tipped)
+        else if(getSensor(armPot) >= ARM_RELEASE_HEIGHT)
         {
             claw1PidValue = CLAW_OPEN_POSITION;
+            claw2PidValue = CLAW_OPEN_POSITION;
         }
 
-        claw2PidValue = claw1PidValue;
+        if(tipped)
+        {
+            claw2PidValue = claw1PidValue;
+        }
         //motors can only be updated every 20 milliseconds
         delay(20);
     }
