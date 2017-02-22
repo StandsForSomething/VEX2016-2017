@@ -76,8 +76,11 @@ void loads(int loads)
         }
         controlClaw(CLAW_OPEN_POSITION, false);
         controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-        controlDrive(3000, FORWARD, true);
-        delay(1000);
+        if(i < loads - 2)
+        {
+            controlDrive(3000, FORWARD, true);
+            delay(1000);
+        }
     }
 }
 
@@ -89,10 +92,10 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
-            controlDrive(400, BACKWARD, true);
+            controlDrive(500, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, false);
             delay(1000);
-            controlDrive(200, FORWARD, true);
+            controlDrive(250, FORWARD, true);
             loads(3);
             break;
 
