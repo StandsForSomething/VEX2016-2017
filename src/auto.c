@@ -63,22 +63,27 @@
 bool color = BLUE;
 
 void loads(int loads)
+
 {
     for(int i = 0; i < loads; i++)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
-        controlDrive(3000, BACKWARD, false);
+        controlDrive(1500, BACKWARD, false);
         delay(1500);
         controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
-        while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+        while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
         {
             delay(20);
         }
         controlClaw(CLAW_OPEN_POSITION, false);
+        while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+        {
+            delay(20);
+        }
         controlLiftPot(-127, ARM_MIN_HEIGHT, false);
         if(i < loads - 2)
         {
-            controlDrive(3000, FORWARD, true);
+            controlDrive(1500, FORWARD, true);
             delay(1000);
         }
     }
@@ -92,10 +97,10 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
-            controlDrive(500, BACKWARD, true);
+            controlDrive(650, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, false);
             delay(1000);
-            controlDrive(250, FORWARD, true);
+            controlDrive(200, FORWARD, true);
             loads(3);
             break;
 
