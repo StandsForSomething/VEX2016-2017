@@ -43,7 +43,7 @@
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define MAIN_H_
 
-#define ARM_LAUNCH_HEIGHT 2850
+#define ARM_LAUNCH_HEIGHT 2500
 #define ARM_RELEASE_HEIGHT 1500
 #define ARM_MIN_HEIGHT 280
 #define ARM_CONST_POWER_HEIGHT_MAX 1140
@@ -51,7 +51,8 @@
 #define ARM_CONST_POWER 15
 
 #define CLAW_OPEN_POSITION 2060
-#define CLAW_CLOSE_POSITION 3250
+#define CLAW_OPEN_WIDE_POSISTION 3200
+#define CLAW_CLOSE_POSITION 3450
 
 #include <API.h>
 #include "hardwareAbstraction.h"

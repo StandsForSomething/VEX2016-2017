@@ -90,6 +90,8 @@ void operatorControl()
 
     while(1)
     {
+        printf("%f\n\r", getSensor(armPot));
+
         if(C1_5U && !btn5uPushed && !btn5dPushed)
         {
             motorSpeed = driveSpeed;

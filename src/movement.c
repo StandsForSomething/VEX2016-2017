@@ -57,12 +57,15 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
     driveRPidValue = targetR;
     while(waitForTargetReached &&
           (abs(getSensor(encoderLeft.parent)) > abs(targetL) + 20 ||
-          abs(getSensor(encoderLeft.parent)) < abs(targetL) - 20 ||
-          abs(getSensor(encoderRight.parent)) > abs(targetR) + 20 ||
-           abs(getSensor(encoderRight.parent)) < abs(targetR) - 20))
+           abs(getSensor(encoderLeft.parent)) < abs(targetL) - 20))
     {
         printf("%f : %f\n\r", getSensor(encoderLeft.parent), getSensor(encoderRight.parent));
         delay(20);
+    }
+
+    if(waitForTargetReached)
+    {
+        targetR = getSensor(encoderRight.parent);
     }
 }
 
@@ -84,12 +87,11 @@ void controlLiftPotTask(void *funcArgs)
 {
     controlLiftPotArgs* argsPointer = funcArgs;
     controlLiftPotArgs args = *argsPointer;
-
-    controlLift(args.speed);
     if(args.speed >= 0)
     {
         while(getSensor(armPot) < args.potValue)
         {
+            controlLift(args.speed);
             delay(20);
         }
     }
@@ -98,6 +100,7 @@ void controlLiftPotTask(void *funcArgs)
         while(getSensor(armPot) > args.potValue)
         {
             delay(20);
+            controlLift(args.speed);
         }
     }
 
@@ -115,13 +118,13 @@ void controlLiftPotTask(void *funcArgs)
 
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
 {
-    controlLiftPotArgs args = {speed, potValue};
+    static controlLiftPotArgs args;
+    args = (controlLiftPotArgs){speed, potValue};
 
     if(!waitForTaskEnd)
     {
         taskCreate(controlLiftPotTask,
                    TASK_DEFAULT_STACK_SIZE, &args, TASK_PRIORITY_DEFAULT);
-        delay(20);
     }
 
     else
@@ -136,11 +139,11 @@ void controlClaw(double target, bool waitForTargetReached)
     claw1PidValue = target;
     claw2PidValue = target;
 
-    while(waitForTargetReached &&
-          (getSensor(claw1Pot) > target + 30 ||
-           getSensor(claw1Pot) < target - 30 ||
-           getSensor(claw2Pot) > target + 30 ||
-           getSensor(claw2Pot) < target - 30))
+    while(waitForTargetReached && (claw1Moving || claw2Moving) &&
+          (getSensor(claw1Pot) > target + 35 ||
+           getSensor(claw1Pot) < target - 35 ||
+           getSensor(claw2Pot) > target + 35 ||
+           getSensor(claw2Pot) < target - 35))
     {
         delay(20);
     }

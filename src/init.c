@@ -70,13 +70,19 @@ void initialize()
     printf("encoders setup\n\r");
     encoderSetup();
     static pControllerArgs claw1Args;
-    claw1Args = (pControllerArgs){0.2, &claw1PidValue, claw1, claw1Pot, &disableClaw1Pid};
+    claw1Args = (pControllerArgs){0.2, &claw1PidValue, claw1, claw1Pot,
+                                  &disableClaw1Pid, &claw1Moving};
     static pControllerArgs claw2Args;
-    claw2Args = (pControllerArgs){0.2, &claw2PidValue, claw2, claw2Pot, &disableClaw2Pid};
+    claw2Args = (pControllerArgs){0.2, &claw2PidValue, claw2, claw2Pot,
+                                  &disableClaw2Pid, &claw2Moving};
     static pControllerArgs driveLArgs;
-    driveLArgs = (pControllerArgs){2, &driveLPidValue, LDrive, encoderLeft.parent, &disableDrivePid};
+    driveLArgs = (pControllerArgs){2, &driveLPidValue, LDrive,
+                                   encoderLeft.parent, &disableDrivePid,
+                                   &driveMoving};
     static pControllerArgs driveRArgs;
-    driveRArgs = (pControllerArgs){2, &driveRPidValue, RDrive, encoderRight.parent, &disableDrivePid};
+    driveRArgs = (pControllerArgs){2, &driveRPidValue, RDrive,
+                                   encoderRight.parent, &disableDrivePid,
+                                   &driveMoving};
     printf("LCD display\n\r");
     lcdInit(uart1);
     lcdClear(uart1);
@@ -85,10 +91,15 @@ void initialize()
     newItem("dump preload", NULL);
     newItem("test", NULL);
     selectionPot = autoSelect;
-    taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw1Args, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw2Args, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs, TASK_PRIORITY_DEFAULT);
-    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs, TASK_PRIORITY_DEFAULT);
+    taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL,
+               TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw1Args,
+               TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &claw2Args,
+               TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs,
+               TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs,
+               TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
 }

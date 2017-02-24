@@ -2,21 +2,26 @@
 
 double claw1PidValue;
 bool disableClaw1Pid = false;
+bool claw1Moving;
 
 double claw2PidValue;
 bool disableClaw2Pid = false;
+bool claw2Moving;
 
 double driveLPidValue;
 double driveRPidValue;
 bool disableDrivePid = true;
+bool driveMoving;
 
 void pidController(void *taskArgs)
 {
     pControllerArgs* argsPointer = taskArgs;
     pControllerArgs  args = *argsPointer;
     float  pidSensorCurrentValue;
+    float  pidSensorLastValue = getSensor(args.pidSensor);
     float  pidError;
     float  pidDrive;
+    unsigned long last_time = millis();
     *args.pidValue = getSensor(args.pidSensor);
     while(true)
     {
@@ -34,6 +39,21 @@ void pidController(void *taskArgs)
             pidDrive = 127;
         if(pidDrive < -127)
             pidDrive = -127;
+
+        if(last_time + 500 >= millis())
+        {
+            last_time = millis();
+            if(pidSensorCurrentValue + 20 <= pidSensorLastValue ||
+               pidSensorCurrentValue - 20 >= pidSensorLastValue)
+            {
+                *args.movement = false;
+            }
+            else
+            {
+                *args.movement = true;
+            }
+            pidSensorLastValue = pidSensorCurrentValue;
+        }
 
         if(!*args.disabled)
         {

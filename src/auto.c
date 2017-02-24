@@ -68,7 +68,7 @@ void loads(int loads)
     for(int i = 0; i < loads; i++)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
-        controlDrive(1500, BACKWARD, false);
+        controlDrive(1200, BACKWARD, false);
         delay(1500);
         controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
         while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
@@ -80,10 +80,10 @@ void loads(int loads)
         {
             delay(20);
         }
-        controlLiftPot(-127, ARM_MIN_HEIGHT, false);
-        if(i < loads - 2)
+        controlLiftPot(-127, ARM_MIN_HEIGHT, true);
+        if(i < loads - 1)
         {
-            controlDrive(1500, FORWARD, true);
+            controlDrive(1200, FORWARD, true);
             delay(1000);
         }
     }
