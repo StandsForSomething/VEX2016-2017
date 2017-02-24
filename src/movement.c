@@ -137,10 +137,10 @@ void controlClaw(double target, bool waitForTargetReached)
     claw2PidValue = target;
 
     while(waitForTargetReached &&
-          (getSensor(claw1Pot) > target + 20 ||
-           getSensor(claw1Pot) < target - 20 ||
-           getSensor(claw2Pot) > target + 20 ||
-           getSensor(claw2Pot) < target - 20))
+          (getSensor(claw1Pot) > target + 30 ||
+           getSensor(claw1Pot) < target - 30 ||
+           getSensor(claw2Pot) > target + 30 ||
+           getSensor(claw2Pot) < target - 30))
     {
         delay(20);
     }
