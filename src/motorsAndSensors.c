@@ -42,8 +42,8 @@ encoder encoderRight;
 
 void gyroSetup()
 {
-    gyro1 = gyroInit(7, 190);
-    gyro2 = gyroInit(8, 230);
+    gyro1 = gyroInit(7, 206);
+    gyro2 = gyroInit(8, 180);
 }
 
 void encoderSetup()

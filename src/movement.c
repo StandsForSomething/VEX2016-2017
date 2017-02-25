@@ -152,8 +152,7 @@ void controlClaw(double target, bool waitForTargetReached)
 
 int rGyros()
 {
-    //return (gyroGet(gyro1) + gyroGet(gyro2)) / 2;
-    return gyroGet(gyro1);
+    return (gyroGet(gyro1) + gyroGet(gyro2)) / 2;
 }
 
 void rTurn(int degrees, int tolerance, int power, bool isAbsolute)
@@ -182,7 +181,6 @@ void rTurn(int degrees, int tolerance, int power, bool isAbsolute)
             setMotor(RDrive, -power);
         }
     }
-    
     driveLPidValue = getSensor(encoderLeft.parent);
     driveRPidValue = getSensor(encoderRight.parent);
     disableDrivePid = false;
