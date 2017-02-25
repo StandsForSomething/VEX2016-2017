@@ -3,6 +3,7 @@
 void controlDrive(double target, direction dir, bool waitForTargetReached)
 {   encoderReset(encoderLeft.shaftEncoder);
     encoderReset(encoderRight.shaftEncoder);
+    disableDrivePid = false;
     double targetL = 0;
     double targetR = 0;
     switch(dir)
@@ -147,4 +148,42 @@ void controlClaw(double target, bool waitForTargetReached)
     {
         delay(20);
     }
+}
+
+int rGyros()
+{
+    //return (gyroGet(gyro1) + gyroGet(gyro2)) / 2;
+    return gyroGet(gyro1);
+}
+
+void rTurn(int degrees, int tolerance, int power, bool isAbsolute)
+{
+    disableDrivePid = true;
+    if (!isAbsolute)
+    {
+        gyroReset(gyro1);
+        gyroReset(gyro2);
+    }
+    if (degrees > rGyros() + tolerance)
+    {
+        while (degrees > rGyros())
+        {
+            setMotor(LDrive, -power);
+            setMotor(RDrive, power);
+        }
+
+    }
+
+    else if (degrees < rGyros() - tolerance)
+    {
+        while (degrees < rGyros())
+        {
+            setMotor(LDrive, power);
+            setMotor(RDrive, -power);
+        }
+    }
+    
+    driveLPidValue = getSensor(encoderLeft.parent);
+    driveRPidValue = getSensor(encoderRight.parent);
+    disableDrivePid = false;
 }

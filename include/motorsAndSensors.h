@@ -29,9 +29,13 @@ extern sensor armPot;  //analog port 3, not reversed
 extern sensor claw1Pot;  //analog port 4, not reversed
 extern sensor claw2Pot;  //analog port 5, not reversed
 
+extern Gyro gyro1;
+extern Gyro gyro2;
+
 
 extern encoder encoderLeft;  //digital ports 8 and 9, reversed
 extern encoder encoderRight;  // digital ports 11 and 12, not reversed
 
+void gyroSetup();
 void encoderSetup();
 #endif

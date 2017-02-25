@@ -57,6 +57,7 @@
 #define SKILLS 1
 #define DUMP_PRELOAD 2
 #define TEST 3
+#define TEST_GYRO 4
 
 #define RED false
 #define BLUE true
@@ -112,6 +113,10 @@ void autonomous()
             controlDrive(1320, BACKWARD, true);
             controlDrive(1320, LEFT_TURN, true);
             controlDrive(1320, RIGHT_TURN, true);
+            break;
+
+        case TEST_GYRO:
+            rTurn(360, 3, 127, false);
             break;
 
             default:

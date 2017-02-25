@@ -69,6 +69,7 @@ void initialize()
 {
     printf("encoders setup\n\r");
     encoderSetup();
+    gyroSetup();
     static pControllerArgs claw1Args;
     claw1Args = (pControllerArgs){0.2, &claw1PidValue, claw1, claw1Pot,
                                   &disableClaw1Pid, &claw1Moving};
@@ -90,6 +91,7 @@ void initialize()
     newItem("skills", NULL);
     newItem("dump preload", NULL);
     newItem("test", NULL);
+    newItem("test gyro", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL,
                TASK_PRIORITY_DEFAULT);

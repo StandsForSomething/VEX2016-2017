@@ -18,4 +18,6 @@ void controlDrive(double target, direction dir, bool waitForTargetReached);
 void controlLift(int speed);
 void controlLiftPot(int speed, double potValue, bool waitForTaskEnd);
 void controlClaw(double target, bool waitForTargetReached);
+int rGyros();
+void rTurn(int degrees, int tolerance, int power, bool isAbsolute);
 #endif //MOVEMENT_H_

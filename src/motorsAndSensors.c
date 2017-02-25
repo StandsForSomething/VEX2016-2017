@@ -33,11 +33,18 @@ sensor autoSelect = {2, ANALOG, false};
 sensor armPot = {3, ANALOG, false};
 sensor claw1Pot = {4, ANALOG, false};
 sensor claw2Pot = {5, ANALOG, false};
+Gyro gyro1;
+Gyro gyro2;
 
 //encoders
 encoder encoderLeft;
 encoder encoderRight;
 
+void gyroSetup()
+{
+    gyro1 = gyroInit(7, 190);
+    gyro2 = gyroInit(8, 230);
+}
 
 void encoderSetup()
 {
