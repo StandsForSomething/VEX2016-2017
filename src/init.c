@@ -77,11 +77,11 @@ void initialize()
     claw2Args = (pControllerArgs){0.2, &claw2PidValue, claw2, claw2Pot,
                                   &disableClaw2Pid, &claw2Moving};
     static pControllerArgs driveLArgs;
-    driveLArgs = (pControllerArgs){2, &driveLPidValue, LDrive,
+    driveLArgs = (pControllerArgs){1, &driveLPidValue, LDrive,
                                    encoderLeft.parent, &disableDrivePid,
                                    &driveMoving};
     static pControllerArgs driveRArgs;
-    driveRArgs = (pControllerArgs){2, &driveRPidValue, RDrive,
+    driveRArgs = (pControllerArgs){1, &driveRPidValue, RDrive,
                                    encoderRight.parent, &disableDrivePid,
                                    &driveMoving};
     printf("LCD display\n\r");
