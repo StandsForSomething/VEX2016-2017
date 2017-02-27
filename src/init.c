@@ -89,9 +89,10 @@ void initialize()
     lcdClear(uart1);
     newItem("no auton", NULL);
     newItem("skills", NULL);
-    newItem("dump preload", NULL);
-    newItem("test", NULL);
-    newItem("test gyro", NULL);
+    newItem("dump preload R", NULL);
+    newItem("dump preload L", NULL);
+    newItem("cube R", NULL);
+    newItem("cube L", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL,
                TASK_PRIORITY_DEFAULT);

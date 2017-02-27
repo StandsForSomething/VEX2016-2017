@@ -55,22 +55,30 @@
  */
 
 #define SKILLS 1
-#define DUMP_PRELOAD 2
-#define TEST 3
-#define TEST_GYRO 4
+#define DUMP_PRELOAD_RIGHT_TILE 2
+#define DUMP_PRELOAD_LEFT_TILE 3
+#define CUBE_RIGHT_TILE 4
+#define CUBE_LEFT_TILE 5
+
+#define TEST 6
+#define TEST_GYRO 7
 
 #define RED false
 #define BLUE true
 bool color = BLUE;
 
-void loads(int loads)
+int gyroValue;
+
+void loads(int loads, double distance)
 
 {
     for(int i = 0; i < loads; i++)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
-        controlDrive(1200, BACKWARD, false);
+        delay(500);
+        controlDrive(distance, BACKWARD, false);
         delay(1500);
+        gyroValue = rGyros();
         controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
         while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
         {
@@ -82,9 +90,10 @@ void loads(int loads)
             delay(20);
         }
         controlLiftPot(-127, ARM_MIN_HEIGHT, true);
+        rTurn(gyroValue, 3, 127, true);
         if(i < loads - 1)
         {
-            controlDrive(1200, FORWARD, true);
+            controlDrive(distance, FORWARD, true);
             delay(1000);
         }
     }
@@ -102,10 +111,71 @@ void autonomous()
             controlClaw(CLAW_OPEN_POSITION, false);
             delay(1000);
             controlDrive(200, FORWARD, true);
-            loads(3);
+            loads(2, 1200);
+            rTurn(-35, 3, 127, false);
+            controlDrive(1200, FORWARD, true);
+            loads(1, 1200);
+            rTurn(90, 3, 127, false);
+            controlDrive(2000, FORWARD, true);
             break;
 
-        case DUMP_PRELOAD:
+        case DUMP_PRELOAD_RIGHT_TILE:
+            controlDrive(650, BACKWARD, true);
+            controlClaw(CLAW_OPEN_POSITION+100, false);
+            rTurn(35, 3, 127, false);
+            delay(1000);
+            controlDrive(500, FORWARD, true);
+            loads(1, 1600);
+            controlClaw(CLAW_OPEN_POSITION - 600, false);
+            controlDrive(600, BACKWARD, false);
+            controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
+            delay(2000);
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            break;
+
+        case DUMP_PRELOAD_LEFT_TILE:
+            controlDrive(650, BACKWARD, true);
+            controlClaw(CLAW_OPEN_POSITION+100, false);
+            rTurn(-25, 3, 127, false);
+            delay(1000);
+            controlDrive(500, FORWARD, true);
+            loads(1, 1600);
+            controlClaw(CLAW_OPEN_POSITION - 600, false);
+            controlDrive(600, BACKWARD, false);
+            controlLiftPot(127, ARM_LAUNCH_HEIGHT, true);
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            
+            break;
+
+        case CUBE_RIGHT_TILE:
+            controlDrive(650, BACKWARD, true);
+            controlClaw(CLAW_OPEN_POSITION+100, false);
+            rTurn(25, 3, 127, false);
+            delay(1000);
+            controlDrive(500, FORWARD, true);
+            loads(1, 1600);
+            controlClaw(CLAW_OPEN_POSITION - 600, false);
+            controlDrive(600, BACKWARD, false);
+            controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            rTurn(-35, 3, 127, false);
+            controlDrive(500, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlLiftPot(127, CONST_POWER_HEIGHT + 30, true);
+            rTurn(35, 3, 127, true);
+            controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
+            while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
+            {
+                delay(20);
+            }
+            controlClaw(CLAW_OPEN_POSITION, false);
+            while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+            {
+                delay(20);
+            }
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            controlDrive(600, FORWARD, true);
+            loads(1);
             break;
 
         case TEST:
@@ -122,7 +192,7 @@ void autonomous()
             default:
                 printf("error, selected autonomous doesn't exist\n\r");
                 break;
-            }
         }
+    }
     printf("end autonomous\n\r");
 }
