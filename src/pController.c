@@ -13,6 +13,10 @@ double driveRPidValue;
 bool disableDrivePid = true;
 bool driveMoving;
 
+double liftPidValue;
+bool disableArmPid = true;
+bool liftMoving;
+
 void pidController(void *taskArgs)
 {
     pControllerArgs* argsPointer = taskArgs;
@@ -57,6 +61,16 @@ void pidController(void *taskArgs)
 
         if(!*args.disabled)
         {
+            //well this is crap programming, I'll fix it later...
+            if(args.arm)
+            {
+                setMotor(liftLeftY, pidDrive);
+                setMotor(liftLeft, pidDrive);
+                setMotor(liftRightY, pidDrive);
+                setMotor(liftRight, pidDrive);
+            }
+
+            else
             // send to motor
             setMotor(args.pidMotor, pidDrive);
         }

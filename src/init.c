@@ -72,18 +72,23 @@ void initialize()
     gyroSetup();
     static pControllerArgs claw1Args;
     claw1Args = (pControllerArgs){0.2, &claw1PidValue, claw1, claw1Pot,
-                                  &disableClaw1Pid, &claw1Moving};
+                                  &disableClaw1Pid, &claw1Moving, false};
     static pControllerArgs claw2Args;
     claw2Args = (pControllerArgs){0.2, &claw2PidValue, claw2, claw2Pot,
-                                  &disableClaw2Pid, &claw2Moving};
+                                  &disableClaw2Pid, &claw2Moving, false};
     static pControllerArgs driveLArgs;
     driveLArgs = (pControllerArgs){1, &driveLPidValue, LDrive,
                                    encoderLeft.parent, &disableDrivePid,
-                                   &driveMoving};
+                                   &driveMoving, false};
     static pControllerArgs driveRArgs;
     driveRArgs = (pControllerArgs){1, &driveRPidValue, RDrive,
                                    encoderRight.parent, &disableDrivePid,
-                                   &driveMoving};
+                                   &driveMoving, false};
+
+    static pControllerArgs liftArgs;
+    driveRArgs = (pControllerArgs){1, &liftPidValue, liftLeft,
+                                   armPot, &disableArmPid,
+                                   &liftMoving, false};
     printf("LCD display\n\r");
     lcdInit(uart1);
     lcdClear(uart1);

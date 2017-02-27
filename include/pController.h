@@ -9,6 +9,7 @@ typedef struct pControllerArgs
     sensor pidSensor;
     bool *disabled;
     bool *movement;
+    bool arm;
 }pControllerArgs;
 
 extern double claw1PidValue;
@@ -23,6 +24,10 @@ extern double driveLPidValue;
 extern double driveRPidValue;
 extern bool disableDrivePid;
 extern bool driveMoving;
+
+extern double liftPidValue;
+extern bool disableArmPid;
+extern bool liftMoving;
 
 extern void pidController(void *taskArgs);
 #endif

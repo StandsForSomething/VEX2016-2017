@@ -161,7 +161,7 @@ void autonomous()
             rTurn(-35, 3, 127, false);
             controlDrive(500, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlLiftPot(127, CONST_POWER_HEIGHT + 30, true);
+            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 30, true);
             rTurn(35, 3, 127, true);
             controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
             while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
@@ -175,7 +175,7 @@ void autonomous()
             }
             controlLiftPot(127, ARM_MIN_HEIGHT, true);
             controlDrive(600, FORWARD, true);
-            loads(1);
+            loads(1, 1200);
             break;
 
         case TEST:
