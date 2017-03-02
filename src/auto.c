@@ -69,6 +69,39 @@ bool color = BLUE;
 
 int gyroValue;
 
+void dump(bool grab, bool saveGyroPosition, bool armDown)
+{
+    if(grab)
+    {
+        controlClaw(CLAW_CLOSE_POSITION, true);
+    }
+
+    if(saveGyroPosition)
+    {
+        gyroValue = rGyros();
+    }
+
+    controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
+    while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
+    {
+        delay(20);
+    }
+    controlClaw(CLAW_OPEN_POSITION, false);
+    while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
+    {
+        delay(20);
+    }
+
+    if(armDown)
+    {
+        controlLiftPot(-127, ARM_MIN_HEIGHT, true);
+        if(saveGyroPosition)
+        {
+            rTurn(gyroValue, 3, 127, true);
+        }
+    }
+}
+
 void loads(int loads, double distance)
 
 {
@@ -77,23 +110,11 @@ void loads(int loads, double distance)
         controlClaw(CLAW_CLOSE_POSITION, true);
         delay(500);
         controlDrive(distance, BACKWARD, false);
-        delay(1500);
-        gyroValue = rGyros();
-        controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
-        while(getSensor(armPot) < ARM_RELEASE_HEIGHT)
-        {
-            delay(20);
-        }
-        controlClaw(CLAW_OPEN_POSITION, false);
-        while(getSensor(armPot) < ARM_LAUNCH_HEIGHT)
-        {
-            delay(20);
-        }
-        controlLiftPot(-127, ARM_MIN_HEIGHT, true);
-        rTurn(gyroValue, 3, 127, true);
+        delay(1000);
+        dump(false ,true, true);
         if(i < loads - 1)
         {
-            controlDrive(distance, FORWARD, true);
+            controlDrive(distance - 250, FORWARD, true);
             delay(1000);
         }
     }
@@ -108,15 +129,26 @@ void autonomous()
         {
         case SKILLS:
             controlDrive(650, BACKWARD, true);
-            controlClaw(CLAW_OPEN_POSITION, false);
-            delay(1000);
-            controlDrive(200, FORWARD, true);
+            rTurn(5, 0, 50, false);
+            controlClaw(CLAW_OPEN_POSITION + 500, true);
+            controlDrive(235, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlDrive(250, BACKWARD, true);
+            controlClaw(CLAW_OPEN_POSITION, true);
+            controlDrive(250, FORWARD, true);
             loads(2, 1200);
-            rTurn(-35, 3, 127, false);
+            rTurn(-15, 3, 127, false);
             controlDrive(1200, FORWARD, true);
-            loads(1, 1200);
+            rTurn(15, 3, 127, false);
+            loads(1, 1000);
             rTurn(90, 3, 127, false);
             controlDrive(2000, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            rTurn(-90, 3, 127, false);
+            dump(false, true, true);
+            //controlDrive(200, FORWARD, true);
+            dump(true, true, true);
             break;
 
         case DUMP_PRELOAD_RIGHT_TILE:
@@ -179,10 +211,7 @@ void autonomous()
             break;
 
         case TEST:
-            controlDrive(1320, FORWARD, true);
-            controlDrive(1320, BACKWARD, true);
-            controlDrive(1320, LEFT_TURN, true);
-            controlDrive(1320, RIGHT_TURN, true);
+            rerunTest();
             break;
 
         case TEST_GYRO:
