@@ -1,0 +1,2 @@
+void record();
+void auton();

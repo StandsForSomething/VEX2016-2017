@@ -89,6 +89,8 @@ void operatorControl()
         delay(1000);
     }
 
+    taskCreate(record, TASK_DEFAULT_STACK_SIZE, NULL,
+               TASK_PRIORITY_DEFAULT);
     while(1)
     {
         if(C1_5U && !btn5uPushed && !btn5dPushed)

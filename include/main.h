@@ -61,6 +61,8 @@
 #include "LCDMenu.h"
 #include "movement.h"
 #include "pController.h"
+#include "rerun.h"
+#include "recordedAutons.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

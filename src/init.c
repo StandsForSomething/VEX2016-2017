@@ -86,9 +86,9 @@ void initialize()
                                    &driveMoving, false};
 
     static pControllerArgs liftArgs;
-    driveRArgs = (pControllerArgs){1, &liftPidValue, liftLeft,
+    liftArgs = (pControllerArgs){0.5, &liftPidValue, liftLeft,
                                    armPot, &disableArmPid,
-                                   &liftMoving, false};
+                                   &liftMoving, true};
     printf("LCD display\n\r");
     lcdInit(uart1);
     lcdClear(uart1);
@@ -98,6 +98,7 @@ void initialize()
     newItem("dump preload L", NULL);
     newItem("cube R", NULL);
     newItem("cube L", NULL);
+    newItem("rerun test", NULL);
     selectionPot = autoSelect;
     taskCreate(LCDMenuTask, TASK_DEFAULT_STACK_SIZE, NULL,
                TASK_PRIORITY_DEFAULT);
@@ -108,6 +109,8 @@ void initialize()
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveLArgs,
                TASK_PRIORITY_DEFAULT);
     taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &driveRArgs,
-               TASK_PRIORITY_DEFAULT);
+             TASK_PRIORITY_DEFAULT);
+    taskCreate(pidController, TASK_DEFAULT_STACK_SIZE, &liftArgs,
+             TASK_PRIORITY_DEFAULT);
     printf("initialized\n\r");
 }
