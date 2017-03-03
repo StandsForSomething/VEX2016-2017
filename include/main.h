@@ -64,6 +64,10 @@
 #include "rerun.h"
 #include "recordedAutons.h"
 
+extern int motorSpeed;
+extern int motorTurnSpeed;
+
+
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
 extern "C" {

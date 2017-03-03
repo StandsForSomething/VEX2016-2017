@@ -18,9 +18,9 @@ void record()
             j = 0;
         }
         j++;
-        printf("    auton(%f, %f, %f, %f, %f, %d);\n\r",
-               getSensor(armPot), getSensor(encoderLeft.parent),
-               getSensor(encoderRight.parent), getSensor(claw1Pot),
+        printf("    auton(%f, %d, %d, %f, %f, %d);\n\r",
+               getSensor(armPot), motorSpeed, motorTurnSpeed,
+               getSensor(claw1Pot),
                getSensor(claw2Pot), rGyros());
         delay(100);
     }
@@ -28,14 +28,14 @@ void record()
 
 int s;
 
-void auton(double liftTarget, double driveLTarget, double driveRTarget,
+void auton(double liftTarget, int motorSpeedArg, int motorTurnSpeedArg,
            double claw1Target , double claw2Target, int gyros)
 {
     for (int i = 0; i < 100; i++)
     {
         liftPidValue = liftTarget;
-        driveLPidValue = driveLTarget;
-        driveRPidValue = driveRTarget;
+        setMotorBVVC(LDrive,  motorSpeedArg + motorTurnSpeedArg);
+        setMotorBVVC(RDrive, motorSpeedArg - motorTurnSpeedArg);
         claw1PidValue = claw1Target;
         claw2PidValue = claw2Target;
         /*if(rGyros() < gyros - 10 || rGyros() > gyros + 10)

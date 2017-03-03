@@ -60,6 +60,10 @@
  * even if empty.
  */
 
+
+int motorSpeed = 0;
+int motorTurnSpeed = 0;
+
 void operatorControl()
 {
     printf("opcontrol started\n\r");
@@ -67,8 +71,6 @@ void operatorControl()
     int clawControl = 0;
     int driveSpeed = 100;
     int turnSpeed = 75;
-    int motorSpeed = 0;
-    int motorTurnSpeed = 0;
     bool btn5uPushed = false;
     bool btn5dPushed = false;
     bool btn6uPushed = false;
