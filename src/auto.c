@@ -102,19 +102,30 @@ void dump(bool grab, bool saveGyroPosition, bool armDown)
     }
 }
 
-void loads(int loads, double distance)
-
+void loads(int loads, double distance, bool armDown)
 {
     for(int i = 0; i < loads; i++)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
-        delay(500);
-        controlDrive(distance, BACKWARD, true);
-        dump(false ,true, true);
+        controlDrive(distance + 500, BACKWARD, true);
+
+        if(i < loads -1)
+        {
+            dump(false ,true, true);
+        }
+
+        controlDrive(500, BACKWARD, true);
+
         if(i < loads - 1)
         {
-            controlDrive(distance - 250, FORWARD, true);
+            controlDrive(distance, FORWARD, true);
             delay(1000);
+        }
+
+        else
+        {
+            dump(false, true, armDown);
+            controlDrive(500, BACKWARD, true);
         }
     }
 }
@@ -123,7 +134,6 @@ void autonomous()
 {
     if(getSensor(powerExpand) > 1000)
     {
-        disableDrivePid = false;
         switch(currentSelection)
         {
         case SKILLS:
@@ -132,18 +142,31 @@ void autonomous()
             rTurn(gyroValue + 7, 0, 127, true);
             controlDrive(650, BACKWARD, true);
             controlDrive(235, FORWARD, true);
+
+            //position the stars corretly before scoring them
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlDrive(250, BACKWARD, true);
+            controlDrive(300, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, true);
             controlDrive(250, FORWARD, true);
-            controlClaw(CLAW_CLOSE_POSITION, true);
-            rTurn(-7, 0, 127, false);
-            loads(2, 1200);
-            rTurn(-7, 3, 127, false);
-            controlDrive(1200, FORWARD, true);
+            
+            //controlClaw(CLAW_CLOSE_POSITION, true);
+            //controlDrive(250, BACKWARD, true);
+            //controlClaw(CLAW_OPEN_POSITION, true);
+            //controlDrive(250, FORWARD, true);
+            
+            loads(2, 1300, true);
+            rTurn(-10, 3, 127, false);
+            controlDrive(1300, FORWARD, true);
             rTurn(7, 3, 127, false);
-            loads(1, 1000);
-            rTurn(100, 3, 127, false);
+            loads(2, 1300, false);
+            controlLiftPot(50, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            controlClaw(CLAW_CLOSE_POSITION - 200, false);
+            rTurn(90, 3, 127, false);
+            while((claw1Moving || claw2Moving))
+            {
+                delay(20);
+            }
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
             controlDrive(2000, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
@@ -159,7 +182,7 @@ void autonomous()
             rTurn(35, 3, 127, false);
             delay(1000);
             controlDrive(500, FORWARD, true);
-            loads(1, 1600);
+            loads(1, 1600, true);
             controlClaw(CLAW_OPEN_POSITION - 600, false);
             controlDrive(600, BACKWARD, false);
             controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
@@ -173,12 +196,11 @@ void autonomous()
             rTurn(-25, 3, 127, false);
             delay(1000);
             controlDrive(500, FORWARD, true);
-            loads(1, 1600);
+            loads(1, 1600, true);
             controlClaw(CLAW_OPEN_POSITION - 600, false);
             controlDrive(600, BACKWARD, false);
             controlLiftPot(127, ARM_LAUNCH_HEIGHT, true);
             controlLiftPot(127, ARM_MIN_HEIGHT, true);
-            
             break;
 
         case CUBE_RIGHT_TILE:
@@ -187,7 +209,7 @@ void autonomous()
             rTurn(25, 3, 127, false);
             delay(1000);
             controlDrive(500, FORWARD, true);
-            loads(1, 1600);
+            loads(1, 1600, true);
             controlClaw(CLAW_OPEN_POSITION - 600, false);
             controlDrive(600, BACKWARD, false);
             controlLiftPot(127, ARM_LAUNCH_HEIGHT, false);
@@ -209,7 +231,7 @@ void autonomous()
             }
             controlLiftPot(127, ARM_MIN_HEIGHT, true);
             controlDrive(600, FORWARD, true);
-            loads(1, 1200);
+            loads(1, 1200, true);
             break;
 
         case TEST:

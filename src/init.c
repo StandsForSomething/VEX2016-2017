@@ -79,11 +79,11 @@ void initialize()
     static pControllerArgs driveLArgs;
     driveLArgs = (pControllerArgs){1, &driveLPidValue, LDrive,
                                    encoderLeft.parent, &disableDrivePid,
-                                   &driveMoving, false};
+                                   &driveLMoving, false};
     static pControllerArgs driveRArgs;
     driveRArgs = (pControllerArgs){1, &driveRPidValue, RDrive,
                                    encoderRight.parent, &disableDrivePid,
-                                   &driveMoving, false};
+                                   &driveRMoving, false};
 
     static pControllerArgs liftArgs;
     liftArgs = (pControllerArgs){0.5, &liftPidValue, liftLeft,

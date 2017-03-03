@@ -23,7 +23,8 @@ extern bool claw2Moving;
 extern double driveLPidValue;
 extern double driveRPidValue;
 extern bool disableDrivePid;
-extern bool driveMoving;
+extern bool driveLMoving;
+extern bool driveRMoving;
 
 extern double liftPidValue;
 extern bool disableArmPid;

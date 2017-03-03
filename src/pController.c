@@ -11,7 +11,8 @@ bool claw2Moving;
 double driveLPidValue;
 double driveRPidValue;
 bool disableDrivePid = true;
-bool driveMoving;
+bool driveLMoving;
+bool driveRMoving;
 
 double liftPidValue;
 bool disableArmPid = true;
