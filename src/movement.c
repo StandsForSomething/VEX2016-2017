@@ -112,7 +112,7 @@ void controlLiftPotTask(void *funcArgs)
     }
 
     else
-    {
+    {    
         controlLift(0);
     }
 }
@@ -126,6 +126,7 @@ void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
     {
         taskCreate(controlLiftPotTask,
                    TASK_DEFAULT_STACK_SIZE, &args, TASK_PRIORITY_DEFAULT);
+        delay(20);
     }
 
     else
@@ -140,11 +141,7 @@ void controlClaw(double target, bool waitForTargetReached)
     claw1PidValue = target;
     claw2PidValue = target;
 
-    while(waitForTargetReached && (claw1Moving || claw2Moving) &&
-          (getSensor(claw1Pot) > target + 35 ||
-           getSensor(claw1Pot) < target - 35 ||
-           getSensor(claw2Pot) > target + 35 ||
-           getSensor(claw2Pot) < target - 35))
+    while(waitForTargetReached && (claw1Moving || claw2Moving))
     {
         delay(20);
     }
@@ -184,4 +181,5 @@ void rTurn(int degrees, int tolerance, int power, bool isAbsolute)
     driveLPidValue = getSensor(encoderLeft.parent);
     driveRPidValue = getSensor(encoderRight.parent);
     disableDrivePid = false;
+    delay(1000);
 }

@@ -109,8 +109,7 @@ void loads(int loads, double distance)
     {
         controlClaw(CLAW_CLOSE_POSITION, true);
         delay(500);
-        controlDrive(distance, BACKWARD, false);
-        delay(1000);
+        controlDrive(distance, BACKWARD, true);
         dump(false ,true, true);
         if(i < loads - 1)
         {
@@ -128,20 +127,23 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
+            gyroValue = rGyros();
+            controlClaw(CLAW_OPEN_POSITION - 200, true);
+            rTurn(gyroValue + 7, 0, 127, true);
             controlDrive(650, BACKWARD, true);
-            rTurn(5, 0, 50, false);
-            controlClaw(CLAW_OPEN_POSITION + 500, true);
             controlDrive(235, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlDrive(250, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, true);
             controlDrive(250, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            rTurn(-7, 0, 127, false);
             loads(2, 1200);
-            rTurn(-15, 3, 127, false);
+            rTurn(-7, 3, 127, false);
             controlDrive(1200, FORWARD, true);
-            rTurn(15, 3, 127, false);
+            rTurn(7, 3, 127, false);
             loads(1, 1000);
-            rTurn(90, 3, 127, false);
+            rTurn(100, 3, 127, false);
             controlDrive(2000, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);

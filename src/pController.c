@@ -44,7 +44,7 @@ void pidController(void *taskArgs)
         if(pidDrive < -127)
             pidDrive = -127;
 
-        if(last_time + 500 >= millis())
+        if(last_time + 500 <= millis())
         {
             last_time = millis();
             if(pidSensorCurrentValue + 20 <= pidSensorLastValue ||
