@@ -112,9 +112,9 @@ void loads(int loads, double distance, bool armDown)
         if(i < loads -1)
         {
             dump(false ,true, true);
+            controlDrive(500, BACKWARD, true);
         }
 
-        controlDrive(500, BACKWARD, true);
 
         if(i < loads - 1)
         {
@@ -125,7 +125,6 @@ void loads(int loads, double distance, bool armDown)
         else
         {
             dump(false, true, armDown);
-            controlDrive(500, BACKWARD, true);
         }
     }
 }
@@ -137,43 +136,57 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
+            //open claw and anti-tip
             gyroValue = rGyros();
-            controlClaw(CLAW_OPEN_POSITION - 200, true);
+            controlClaw(CLAW_OPEN_POSITION - 200, true - 200);
             rTurn(gyroValue + 7, 0, 127, true);
             controlDrive(650, BACKWARD, true);
-            controlDrive(235, FORWARD, true);
 
             //position the stars corretly before scoring them
+            controlDrive(235, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlDrive(300, BACKWARD, true);
             controlClaw(CLAW_OPEN_POSITION, true);
-            controlDrive(250, FORWARD, true);
-            
-            //controlClaw(CLAW_CLOSE_POSITION, true);
-            //controlDrive(250, BACKWARD, true);
-            //controlClaw(CLAW_OPEN_POSITION, true);
-            //controlDrive(250, FORWARD, true);
-            
+            controlDrive(280, FORWARD, true);
+
+            //first 2 trips with the driver loads
             loads(2, 1300, true);
+
+            //2nd 2 trips with driver loads
             rTurn(-10, 3, 127, false);
             controlDrive(1300, FORWARD, true);
             rTurn(7, 3, 127, false);
-            loads(2, 1300, false);
-            controlLiftPot(50, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
-            controlClaw(CLAW_CLOSE_POSITION - 200, false);
-            rTurn(90, 3, 127, false);
-            while((claw1Moving || claw2Moving))
-            {
-                delay(20);
-            }
-            controlLiftPot(127, ARM_MIN_HEIGHT, true);
-            controlDrive(2000, FORWARD, true);
+            loads(1, 1800, false);
+
+            //get 5 stars from infront of the fence
+            controlLiftPot(-50, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            controlClaw(CLAW_OPEN_POSITION + 350, false);
+            controlDrive(500, BACKWARD, true);
+            controlDrive(250, FORWARD, true);
+            rTurn(-85, 3, 127, false);
+            controlDrive(650, BACKWARD, true);
+            controlLiftPot(-127, ARM_MIN_HEIGHT, true);
+            controlDrive(500, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            rTurn(185, 3, 127, false);
+            controlClaw(CLAW_OPEN_POSITION + 300, true);
+            controlDrive(800, BACKWARD, true);
+            controlDrive(6500, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlLiftPot(-127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
             rTurn(-90, 3, 127, false);
             dump(false, true, true);
-            //controlDrive(200, FORWARD, true);
-            dump(true, true, true);
+
+            //mid-feild cube
+            controlDrive(500, BACKWARD, true);
+            controlDrive(250, FORWARD, true);
+            rTurn(-50, 3, 127, false);
+            controlDrive(700, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlLiftPot(-127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            rTurn(50, 3, 127, false);
+            controlDrive(1200, BACKWARD, true);
+            dump(false, true, true);
             break;
 
         case DUMP_PRELOAD_RIGHT_TILE:
