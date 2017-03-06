@@ -174,6 +174,12 @@ void operatorControl()
             btn8uPushed = false;
         }
 
+        if(liftControl < -30 && getSensor(armPot) < ARM_LAUNCH_HEIGHT &&
+           !tipped)
+        {
+            liftControl = -30;
+        }
+        
         if(abs(liftControl) > 15 &&
            (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
            && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
