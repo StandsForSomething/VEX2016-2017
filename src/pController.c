@@ -15,7 +15,7 @@ bool driveLMoving;
 bool driveRMoving;
 
 double liftPidValue;
-bool disableArmPid = true;
+bool disableArmPid = false;
 bool liftMoving;
 
 void pidController(void *taskArgs)

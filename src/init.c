@@ -86,7 +86,7 @@ void initialize()
                                    &driveRMoving, false};
 
     static pControllerArgs liftArgs;
-    liftArgs = (pControllerArgs){0.5, &liftPidValue, liftLeft,
+    liftArgs = (pControllerArgs){0.2, &liftPidValue, liftLeft,
                                    armPot, &disableArmPid,
                                    &liftMoving, true};
     printf("LCD display\n\r");

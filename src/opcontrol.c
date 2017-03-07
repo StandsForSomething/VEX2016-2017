@@ -79,7 +79,6 @@ void operatorControl()
     bool tipped = false;
 
     disableDrivePid = true;
-    disableArmPid = true;
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
@@ -174,37 +173,25 @@ void operatorControl()
             btn8uPushed = false;
         }
 
-        if(liftControl < -30 && getSensor(armPot) < ARM_LAUNCH_HEIGHT &&
+        if(liftControl < -35 && getSensor(armPot) < ARM_LAUNCH_HEIGHT &&
            !tipped)
         {
-            liftControl = -30;
-        }
-        
-        if(abs(liftControl) > 15 &&
-           (getSensor(armPot) <= ARM_LAUNCH_HEIGHT || liftControl < 0 || tipped)
-           && (getSensor(armPot) >= ARM_MIN_HEIGHT || liftControl > 0))
-        {
-            setMotor(liftLeftY, liftControl);
-            setMotor(liftLeft, liftControl);
-            setMotor(liftRightY, liftControl);
-            setMotor(liftRight, liftControl);
+            liftControl = -35;
         }
 
-        else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX &&
-                getSensor(armPot) > ARM_CONST_POWER_HEIGHT_MIN)
+        if(abs(liftControl) > 15)
         {
-            setMotor(liftLeftY, ARM_CONST_POWER);
-            setMotor(liftLeft, ARM_CONST_POWER);
-            setMotor(liftRightY, ARM_CONST_POWER);
-            setMotor(liftRight, ARM_CONST_POWER);
+            liftPidValue = getSensor(armPot) + (liftControl * 4.5);
         }
 
-        else
+        if(liftPidValue > ARM_LAUNCH_HEIGHT && !tipped)
         {
-            setMotor(liftLeftY, 0);
-            setMotor(liftLeft, 0);
-            setMotor(liftRightY, 0);
-            setMotor(liftRight, 0);
+            liftPidValue = ARM_LAUNCH_HEIGHT;
+        }
+
+        if(liftPidValue < ARM_MIN_HEIGHT)
+        {
+            liftPidValue = ARM_MIN_HEIGHT;
         }
 
         ////////
@@ -214,7 +201,7 @@ void operatorControl()
         if(abs(clawControl) > 15 && (getSensor(armPot) < ARM_RELEASE_HEIGHT ||
                                      tipped))
         {
-            claw1PidValue = getSensor(claw1Pot) + (clawControl * 4);
+            claw1PidValue = getSensor(claw1Pot) + (clawControl * 3);
         }
 
 
