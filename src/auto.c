@@ -45,7 +45,7 @@
  * re-start it from where it left off.
  *
  * Code running in the autonomous task cannot access information from the VEX
- * Joystick. However, the autonomous function can be invoked from another task if
+bbb * Joystick. However, the autonomous function can be invoked from another task if
  * a VEX Competition Switch is not
  * available, and it can access joystick information if called in this way.
  *
@@ -129,6 +129,21 @@ void loads(int loads, double distance, bool armDown)
     }
 }
 
+void deployClaw()
+{
+    disableClaw1Pid = true;
+    disableClaw2Pid = true;
+    setMotor(claw1, -127);
+    setMotor(claw2, -127);
+    delay(500);
+    setMotor(claw1, 0);
+    setMotor(claw2, 0);
+    claw1PidValue = getSensor(claw1Pot);
+    claw2PidValue = getSensor(claw2Pot);
+    disableClaw1Pid = false;
+    disableClaw2Pid = false;
+}
+
 void autonomous()
 {
     if(getSensor(powerExpand) > 1000)
@@ -137,26 +152,32 @@ void autonomous()
         {
         case SKILLS:
             //open claw and anti-tip
-            gyroValue = rGyros();
-            controlClaw(CLAW_OPEN_POSITION - 200, true - 200);
+            deployClaw();
+            controlClaw(CLAW_OPEN_POSITION, true);
             rTurn(gyroValue + 7, 0, 127, true);
             controlDrive(650, BACKWARD, true);
 
-            //position the stars corretly before scoring them
+            //skills loads
             controlDrive(235, FORWARD, true);
+            loads(2, 1300, false);
+            controlLiftPot(40, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            controlClaw(CLAW_OPEN_POSITION + 300, false);
+
+            //4 stars from back perimeter
+            controlDrive(500, BACKWARD, true);
+            controlDrive(1400, FORWARD, true);
+            rTurn(90, 3, 127, false);
+            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            controlDrive(800, FORWARD, true);
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlDrive(300, BACKWARD, true);
-            controlClaw(CLAW_OPEN_POSITION, true);
-            controlDrive(230, FORWARD, true);
-
-            //first 2 trips with the driver loads
-            loads(2, 1300, true);
-
-            //2nd 2 trips with driver loads
-            rTurn(-10, 3, 127, false);
-            controlDrive(1300, FORWARD, true);
-            rTurn(7, 3, 127, false);
-            loads(1, 4000, false);
+            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 100, true);
+            rTurn(-180, 3, 127, false);
+            controlLiftPot(127, ARM_MIN_HEIGHT, false);
+            controlDrive(1200, FORWARD, true);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 100, true);
+            rTurn(-90, 3, 127, false);
+            loads(1, 1400, false);
 
             //get 5 stars from infront of the fence
             controlLiftPot(-50, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
