@@ -79,6 +79,7 @@ void operatorControl()
     bool tipped = false;
 
     disableDrivePid = true;
+    disableArmPid = false;
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
