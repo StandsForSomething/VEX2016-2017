@@ -45,7 +45,7 @@
  * re-start it from where it left off.
  *
  * Code running in the autonomous task cannot access information from the VEX
-bbb * Joystick. However, the autonomous function can be invoked from another task if
+ * Joystick. However, the autonomous function can be invoked from another task if
  * a VEX Competition Switch is not
  * available, and it can access joystick information if called in this way.
  *
@@ -98,7 +98,7 @@ void dump(bool grab, bool saveGyroPosition, bool armDown)
         if(saveGyroPosition)
         {
             rTurn(gyroValue, 3, 127, true);
-        }
+        } 
     }
 }
 
@@ -106,6 +106,7 @@ void loads(int loads, double distance, bool armDown)
 {
     for(int i = 0; i < loads; i++)
     {
+        delay(2000);
         controlClaw(CLAW_CLOSE_POSITION, true);
         controlDrive(distance + 500, BACKWARD, true);
 
@@ -146,34 +147,39 @@ void deployClaw()
 
 void autonomous()
 {
+    disableArmPid = true;
     if(getSensor(powerExpand) > 1000)
     {
         switch(currentSelection)
         {
         case SKILLS:
             //open claw and anti-tip
-            deployClaw();
-            controlClaw(CLAW_OPEN_POSITION, true);
-            rTurn(gyroValue + 7, 0, 127, true);
-            controlDrive(650, BACKWARD, true);
+            controlDrive(800, BACKWARD, true);
+            delay(1000);
+            gyroValue = rGyros();
+            controlClaw(CLAW_OPEN_POSITION+500, true);
+            rTurn(gyroValue, 3, 127, true);
 
             //skills loads
-            controlDrive(235, FORWARD, true);
-            loads(2, 1300, false);
-            controlLiftPot(40, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
-            controlClaw(CLAW_OPEN_POSITION + 300, false);
+            controlDrive(450, FORWARD, true);
+            loads(2, 1400, false);
+            controlLiftPot(-40, ARM_CONST_POWER_HEIGHT_MIN + 300, true);
+            controlClaw(CLAW_OPEN_POSITION + 450, false);
 
             //4 stars from back perimeter
             controlDrive(500, BACKWARD, true);
             controlDrive(1400, FORWARD, true);
+            delay(1000);
             rTurn(90, 3, 127, false);
-            controlLiftPot(127, ARM_MIN_HEIGHT, true);
+            controlLiftPot(-127, ARM_MIN_HEIGHT, true);
             controlDrive(800, FORWARD, true);
+            delay(1000);
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 100, true);
+            controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 300, true);
             rTurn(-180, 3, 127, false);
             controlLiftPot(127, ARM_MIN_HEIGHT, false);
             controlDrive(1200, FORWARD, true);
+            delay(1000);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlLiftPot(127, ARM_CONST_POWER_HEIGHT_MIN + 100, true);
             rTurn(-90, 3, 127, false);
@@ -183,7 +189,9 @@ void autonomous()
             controlLiftPot(-50, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
             controlClaw(CLAW_OPEN_POSITION + 350, false);
             controlDrive(500, BACKWARD, true);
+            delay(500);
             controlDrive(250, FORWARD, true);
+            delay(500);
             rTurn(-85, 3, 127, false);
             //controlDrive(500, BACKWARD, true);
             controlLiftPot(-127, ARM_MIN_HEIGHT, true);
@@ -192,7 +200,9 @@ void autonomous()
             rTurn(180, 3, 127, false);
             controlClaw(CLAW_OPEN_POSITION + 300, true);
             controlDrive(800, BACKWARD, true);
+            delay(1000);
             controlDrive(6500, FORWARD, true);
+            delay(1000);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlLiftPot(-127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
             rTurn(-90, 3, 127, false);
@@ -200,13 +210,17 @@ void autonomous()
 
             //mid-feild cube
             controlDrive(500, BACKWARD, true);
+            delay(500);
             controlDrive(250, FORWARD, true);
+            delay(500);
             rTurn(-50, 3, 127, false);
             controlDrive(700, FORWARD, true);
+            delay(500);
             controlClaw(CLAW_CLOSE_POSITION, true);
             controlLiftPot(-127, ARM_CONST_POWER_HEIGHT_MIN + 50, false);
             rTurn(50, 3, 127, false);
             controlDrive(1200, BACKWARD, true);
+            delay(1000);
             dump(false, true, true);
             break;
 
