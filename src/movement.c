@@ -44,7 +44,6 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
         targetR = -target;
 
     case STOP:
-        
         targetL = getSensor(encoderLeft.parent);
         targetR = getSensor(encoderRight.parent);
         break;
@@ -68,75 +67,18 @@ void controlDrive(double target, direction dir, bool waitForTargetReached)
     }
 }
 
-void controlLift(int speed)
+void controlLift(double target, bool waitForTargetReached)
 {
-    setMotor(liftLeftY, speed);
-    setMotor(liftLeft, speed);
-    setMotor(liftRightY, speed);
-    setMotor(liftRight, speed);
-}
+    liftPidValue = target;
 
-typedef struct controlLiftPotArgs
-{
-    int speed;
-    double potValue;
-}controlLiftPotArgs;
-
-void controlLiftPotTask(void *funcArgs)
-{
-    controlLiftPotArgs* argsPointer = funcArgs;
-    controlLiftPotArgs args = *argsPointer;
-    if(args.speed >= 0)
+    if(waitForTargetReached)
     {
-        while(getSensor(armPot) < args.potValue)
+        delay(500);
+        while(liftMoving)
         {
-            controlLift(args.speed);
             delay(20);
         }
     }
-    else
-    {
-        while(getSensor(armPot) > args.potValue)
-        {
-            delay(20);
-            controlLift(args.speed);
-        }
-    }
-
-    if(args.potValue == ARM_MIN_HEIGHT)
-    {
-        controlLift(-10);
-    }
-
-    else if(getSensor(armPot) < ARM_CONST_POWER_HEIGHT_MAX ||
-       getSensor(armPot) > ARM_CONST_POWER_HEIGHT_MIN)
-    {
-        controlLift(ARM_CONST_POWER);
-    }
-
-    else
-    {
-        controlLift(0);
-    }
-}
-
-void controlLiftPot(int speed, double potValue, bool waitForTaskEnd)
-{
-    static controlLiftPotArgs args;
-    args = (controlLiftPotArgs){speed, potValue};
-
-    if(!waitForTaskEnd)
-    {
-        taskCreate(controlLiftPotTask,
-                   TASK_DEFAULT_STACK_SIZE, &args, TASK_PRIORITY_DEFAULT);
-        delay(20);
-    }
-
-    else
-    {
-        controlLiftPotTask(&args);
-    }
-    printf("exit\n\r");
 }
 
 void controlClaw(double target, bool waitForTargetReached)
