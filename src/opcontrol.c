@@ -80,6 +80,9 @@ void operatorControl()
 
     disableDrivePid = true;
     disableArmPid = false;
+    liftPidValue = getSensor(armPot);
+    claw1PidValue = getSensor(claw1Pot);
+    claw2PidValue = getSensor(claw2Pot);
     //in the case that the power expander isn't plugged in don't continue until
     //it's plugged in or overriden by placeing a jumper in digital pin 2.
     //this makes sure the robot can't move unless the issue is fixed becuase once
