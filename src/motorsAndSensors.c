@@ -43,7 +43,7 @@ encoder encoderRight;
 void gyroSetup()
 {
     gyro1 = gyroInit(7, 206);
-    gyro2 = gyroInit(8, 180);
+    gyro2 = gyroInit(8, 170);
 }
 
 void encoderSetup()
