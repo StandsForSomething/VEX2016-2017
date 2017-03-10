@@ -139,64 +139,89 @@ void autonomous()
         switch(currentSelection)
         {
         case SKILLS:
-            //open claw and anti-tip
+            /**************************
+             * open claw and anti-tip *
+             **************************/
             controlDrive(800, BACKWARD, true);
-            delay(1000);
             gyroValue = rGyros();
             controlClaw(CLAW_OPEN_POSITION+500, true);
             rTurn(gyroValue, 3, 127, true);
 
-            //skills loads
+            /****************
+             * skills loads *
+             ****************/
             controlDrive(450, FORWARD, true);
             loads(2, 1400, false);
+            delay(1000);
+            controlDrive(500, BACKWARD, true);
+            delay(500);
             controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, true);
             controlClaw(CLAW_OPEN_POSITION + 500, false);
 
-            //4 stars from back perimeter
+            /***********************************************************
+             * 3 stars from back perimeter and 1 star in font of fence *
+             ***********************************************************/
+            //return to starting tile
             controlDrive(500, BACKWARD, true);
             controlDrive(1200, FORWARD, true);
             delay(1000);
+
+            //turn to grab stars
             rTurn(90, 3, 60, false);
+
+            //move backwards to avoid lowering lift onto a star
+            controlDrive(500, BACKWARD, true);
+            delay(500);
+
+            //put lift down, drive forward and grab stars
             controlLift(ARM_MIN_HEIGHT, true);
-            controlDrive(1500, FORWARD, true);
+            controlDrive(2100, FORWARD, true);
             delay(1000);
             controlClaw(CLAW_CLOSE_POSITION, true);
+
+            //get lined up for 4th star
+            controlDrive(1500, BACKWARD, true);
+            delay(1000);
+            controlDrive(500, FORWARD, true);
             controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, true);
             rTurn(-180, 3, 60, false);
-            controlLift(ARM_MIN_HEIGHT, false);
-            controlClaw(CLAW_OPEN_POSITION, true);
-            controlDrive(1200, FORWARD, true);
-            delay(1000);
-            controlClaw(CLAW_CLOSE_POSITION, true);
-            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, true);
-            rTurn(-90, 3, 127, false);
-            loads(1, 1400, false);
-            delay(1000);
 
-            //get 5 stars from infront of the fence
-            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            //grab 4th star
+            controlLift(ARM_MIN_HEIGHT, true);
+            controlClaw(CLAW_OPEN_POSITION + 450, true);
+            controlDrive(1700, FORWARD, true);
+            delay(3000);
+            controlClaw(CLAW_CLOSE_POSITION, true);
+
+            //dump stars
+            controlDrive(600, BACKWARD, true);
+            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, true);
+            rTurn(100, 3, 127, false);
+            controlDrive(1400, BACKWARD, true);
+            delay(1000);
+            dump(false, true, false);
+
+            /*************************************
+             * 3 stars from infront of the fence *
+             *************************************/
+            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, false);
             controlClaw(CLAW_OPEN_POSITION + 350, false);
             controlDrive(500, BACKWARD, true);
             delay(500);
             controlDrive(250, FORWARD, true);
             delay(500);
-            rTurn(-85, 3, 127, false);
-            //controlDrive(500, BACKWARD, true);
+            rTurn(100, 3, 60, false);
             controlLift(ARM_MIN_HEIGHT, true);
-            controlDrive(900, FORWARD, true);
-            controlClaw(CLAW_CLOSE_POSITION, true);
-            rTurn(180, 3, 127, false);
-            controlClaw(CLAW_OPEN_POSITION + 300, true);
-            controlDrive(800, BACKWARD, true);
-            delay(1000);
-            controlDrive(6500, FORWARD, true);
+            controlDrive(1200, FORWARD, true);
             delay(1000);
             controlClaw(CLAW_CLOSE_POSITION, true);
-            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 50, false);
+            controlLift(ARM_CONST_POWER_HEIGHT_MIN + 400, false);
             rTurn(-90, 3, 127, false);
             dump(false, true, true);
 
-            //mid-feild cube
+            /******************
+             * mid-feild cube *
+             ******************/
             controlDrive(500, BACKWARD, true);
             delay(500);
             controlDrive(250, FORWARD, true);
