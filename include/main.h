@@ -52,7 +52,7 @@
 
 #define CLAW_OPEN_POSITION 2100
 #define CLAW_OPEN_WIDE_POSISTION 3200
-#define CLAW_CLOSE_POSITION 3200
+#define CLAW_CLOSE_POSITION 3250
 
 #include <API.h>
 #include "hardwareAbstraction.h"
