@@ -78,7 +78,7 @@ void operatorControl()
     bool btn8uPushed = false;
     bool tipped = false;
 
-    disableDrivePid = true;
+    disableDrivePid = false;
     disableArmPid = false;
     liftPidValue = getSensor(armPot);
     claw1PidValue = getSensor(claw1Pot);
@@ -96,6 +96,8 @@ void operatorControl()
 
     taskCreate(record, TASK_DEFAULT_STACK_SIZE, NULL,
                TASK_PRIORITY_DEFAULT);
+    encoderReset(encoderLeft.shaftEncoder);
+    encoderReset(encoderRight.shaftEncoder);
     while(1)
     {
         if(C1_5U && !btn5uPushed && !btn5dPushed)
@@ -151,8 +153,17 @@ void operatorControl()
             motorTurnSpeed = 0;
         }
 
-        setMotor(LDrive,  motorSpeed + motorTurnSpeed);
-        setMotor(RDrive, motorSpeed - motorTurnSpeed);
+        driveLPidValue = getSensor(encoderLeft.parent) +
+            (motorSpeed + motorTurnSpeed * 4);
+
+        driveRPidValue = getSensor(encoderRight.parent) +
+            (motorSpeed - motorTurnSpeed * 4);
+
+        if(motorSpeed + motorTurnSpeed == 0)
+        {
+            driveLPidValue = getSensor(encoderLeft.parent);
+            driveRPidValue = getSensor(encoderRight.parent);
+        }
 
         ////////
         //lift//
